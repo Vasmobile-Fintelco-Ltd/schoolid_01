@@ -23,6 +23,18 @@ class EducationLevel extends Model
 
     public function Students(): HasMany
     {
-        return $this->hasMany(Students::class);
+        return $this->hasMany(Student::class);
     }
+
+    public function subjects(): HasMany
+    {
+        return $this->hasMany(Subject::class);
+    }
+
+//    public function subjects(): BelongsToMany
+//    {
+//        return $this->belongsToMany(Subject::class, 'education_level_subject')
+//            ->withTimestamps();
+//    }
+// Remember to modify the following to the Subject model:
 }

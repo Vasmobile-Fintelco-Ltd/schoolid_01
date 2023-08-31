@@ -15,8 +15,8 @@ return new class extends Migration
         Schema::create('subscription_plans', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->tinyInteger('validity_unit')->default(ValidityUnit::MONTH);
             $table->decimal('price', 8, 2);
+            $table->integer('validity');
             $table->text('description')->nullable();
             $table->timestamps();
         });

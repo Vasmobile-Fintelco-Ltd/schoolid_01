@@ -18,10 +18,10 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-6">
-                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Campaign Sent">Subjects</h5>
-                            <h3 class="my-2 py-1">8</h3>
+                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Campaign Sent">Centii Balance</h5>
+                            <h3 class="my-2 py-1">ksh {{ $account_balance }}</h3>
                             <p class="mb-0 text-muted">
-                                <span class="text-success me-2"><i class="mdi mdi-arrow-up-bold"></i> 3.27%</span>
+                                <span class="text-success me-2"><i class="mdi mdi-arrow-up-bold"></i>Withdraw</span>
                             </p>
                         </div>
                         <div class="col-6">
@@ -40,7 +40,7 @@
                     <div class="row align-items-center">
                         <div class="col-6">
                             <h5 class="text-muted fw-normal mt-0 text-truncate" title="New Leads">Questions</h5>
-                            <h3 class="my-2 py-1">4000</h3>
+                            <h3 class="my-2 py-1">{{ $questions_count }}</h3>
                             <p class="mb-0 text-muted">
                                 <span class="text-danger me-2"><i class="mdi mdi-arrow-down-bold"></i> 5.38%</span>
                             </p>
@@ -62,10 +62,11 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-6">
-                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">Reports</h5>
-                            <h3 class="my-2 py-1">Monthly</h3>
+                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">Escrow Balance</h5>
+                            <h3 class="my-2 py-1">ksh {{ $centy_balance }}</h3>
                             <p class="mb-0 text-muted">
                                 <span class="text-success me-2"><i class="mdi mdi-arrow-up-bold"></i> 3.27%</span>
+
                             </p>
                         </div>
                         <div class="col-6">
@@ -92,30 +93,25 @@
                             <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                                 <thead>
                                     <tr>
+                                        <th>Exam</th>
                                         <th>Subject</th>
-                                        <th>Topic</th>
                                         <th>Questions</th>
-                                        <th>Centiis</th>
+                                        <th>Centiis </th>
                                         <th>Date</th>
                                     </tr>
                                 </thead>
 
 
                                 <tbody>
+                                    @foreach ($results as $result)
                                     <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
+                                        <td>{{ $result->exam->name }}</td>
+                                        <td>{{ $result->exam->subject->name }}</td>
+                                        <td>{{ $result->exam->questions->count() }}</td>
+                                        <td>{{ $result->yes_ans }}</td>
+                                        <td>{{ $result->created_at }}</td>
                                     </tr>
-                                    <tr>
-                                        <td>Garrett Winters</td>
-                                        <td>Accountant</td>
-                                        <td>Tokyo</td>
-                                        <td>63</td>
-                                        <td>2011/07/25</td>
-                                    </tr>
+                                    @endforeach
 
                                 </tbody>
                             </table>

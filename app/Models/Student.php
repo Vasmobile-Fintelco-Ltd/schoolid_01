@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Str;
 
 class Student extends Model
@@ -18,45 +19,34 @@ class Student extends Model
         'guardian_id',
         'education_system_id',
         'education_level_id',
-        'centy_plus_id',
         'Date_of_birth',
         'school_name',
         'student_phone_number',
         'marks_obtained',
         'credit',
+        'centy_balance',
+        'debit',
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
 
-        static::creating(function ($student) {
-            // Generate the centy_plus_id in the format "CTP-000001", "CTP-000002", etc.
-            $lastStudent = static::orderBy('id', 'desc')->first();
-
-            $sequence = $lastStudent ? intval(Str::after($lastStudent->centy_plus_id, 'CTP-')) + 1 : 1;
-            $student->centy_plus_id = 'CTP-' . str_pad($sequence, 6, '0', STR_PAD_LEFT);
-        });
-    }
-
-    public function guardians(): BelongsTo
+    public function guardian(): BelongsTo
     {
         return $this->belongsTo(Guardian::class);
     }
 
-    public function EducationSystem(): BelongsTo
+    public function educationSystem(): BelongsTo
     {
         return $this->belongsTo(EducationSystem::class);
     }
 
-    public function EducationLevel(): BelongsTo
+    public function educationLevel(): BelongsTo
     {
         return $this->belongsTo(EducationLevel::class);
     }
 
-    public function StudentPlan(): HasOne
+    public function studentSubscriptionPlan(): HasOne
     {
-        return $this->hasOne(StudentSubscriptionPlan::class);
+        return $this->hasOne(StudentSubscriptionPlan::class, 'student_id', 'id');
     }
 
     public function results(): HasMany
@@ -67,6 +57,12 @@ class Student extends Model
     public function user()
     {
     return $this->belongsTo(User::class);
+    }
+
+
+    public function brainGames(): HasMany
+    {
+        return $this->hasMany(BrainGame::class);
     }
 
 }
