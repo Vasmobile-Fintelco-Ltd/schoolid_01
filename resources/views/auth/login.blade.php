@@ -5,8 +5,8 @@
     <div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-xxl-4 col-lg-5">
-                    <div class="card">
+                <div class="col-xxl-4 col-lg-5 shadow-lg">
+                    <div class="card ">
 
                         <div class="card-body p-4">
 

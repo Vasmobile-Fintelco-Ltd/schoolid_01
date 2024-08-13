@@ -61,6 +61,7 @@
                                     <option value="daily">DAILY </option>
                                     <option value="weekly">WEEKLY</option>
                                     <option value="monthly">MONTHLY</option>
+                                    <option value="brain_game">BRAIN GAME</option>
                                     </select>
 
                                     @error('name')

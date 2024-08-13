@@ -27,6 +27,12 @@ class Exam extends Model
     {
         return $this->hasMany(Question::class);
     }
+    //this can be used only to diuspaly the other question without braing game 
+    // public  function questionsExams() : HasMany
+    // {
+    //     return $this->hasMany(Question::class)->where('levelquestion', '!=' ,'brain_game');
+    // }
+
 
     public function teachers(): BelongsTo
     {

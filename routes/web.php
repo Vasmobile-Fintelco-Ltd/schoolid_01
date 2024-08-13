@@ -11,11 +11,15 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\GuardianController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ChatGPTController;
+use App\Http\Controllers\ChatsGPTController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\EduacationSystemsController;
 use App\Http\Controllers\EducationSystemLevelSubjectController;
+use App\Http\Controllers\NonStudentController;
 use App\Http\Controllers\TopicsAndStrandsController;
 
 /*
@@ -38,6 +42,7 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/otp/enter', [OTPVerificationController::class, 'enterOTP'])->name('otp.enter');
 Route::post('/otp/validate', [OTPVerificationController::class, 'validateOTP'])->name('otp.validate');
+Route::post('/nonstudent', [RegisterController::class, 'nonstudent'])->name('nonstudent');
 
 Route::prefix('/admin')->middleware(['isAdmin'])->group(function(){
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
@@ -52,6 +57,7 @@ Route::prefix('/admin')->middleware(['isAdmin'])->group(function(){
     Route::delete('/delete-students/{id}', [AdminController::class, 'destroy_student_account'])->name('destroy_student_account');
 
     Route::get('/transactions', [AdminController::class, 'get_transactions'])->name('get_transactions');
+    Route::get('/brain_game_transactions', [AdminController::class, 'get_brain_game_transactions'])->name('get_brain_game_transactions');
 
 
     Route::get('/education_system', [EduacationSystemsController::class, 'get_education_system'])->name('get_education_system');
@@ -129,4 +135,19 @@ Route::prefix('student')->middleware(['auth', 'isStudent'])->group(function(){
     Route::post('/questions/{exam}', [StudentController::class, 'submitAnswers'])->name('questions.submit');
     Route::get('/view_result/{result}', [StudentController::class, 'viewResult'])->name('students.view_results');
     Route::post('/brain_game', [StudentController::class, 'submitBrainGame'])->name('brain_game.submit');
+    Route::post('/evaluate-answer', [ChatsGPTController::class, 'evaluateAnswer']);
+    Route::post('/stk-push/brain-game', [StudentController::class, 'activateBrainGame'])->name('stk_push.brain_game');
+});
+
+Route::prefix('nonstudent')->middleware(['auth', 'isNonstudent'])->group(function(){
+    Route::get('/', [NonStudentController::class, 'index'])->name('nonstudent.dashboard');
+   // Route::get('/view_exams', [NonStudentController::class, 'getExams'])->name('view_exams');
+    Route::get('/brain_game_play', [NonStudentController::class, 'noBrainGame'])->name('nonstudent_brain_game');
+   // Route::get('/view_questions', [NonStudentController::class, 'getSubjects'])->name('view_questions');
+   // Route::get('/questions/{exam}', [NonStudentController::class, 'showQuestions'])->name('show_questions');
+   // Route::post('/questions/{exam}', [NonStudentController::class, 'submitAnswers'])->name('questions.submit');
+   // Route::get('/view_result/{result}', [NonStudentController::class, 'viewResult'])->name('students.view_results');
+    //Route::post('/brain_game', [NonStudentController::class, 'submitBrainGame'])->name('brain_game.submit');
+    Route::post('/evaluate-answer', [ChatsGPTController::class, 'evaluateAnswer']);
+    //Route::post('/stk-push/brain-game', [NonStudentController::class, 'activateBrainGame'])->name('stk_push.brain_game');
 });

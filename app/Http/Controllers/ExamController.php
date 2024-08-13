@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateExamRequest;
+use App\Models\EducationLevel;
 use App\Models\EducationSystem;
 use App\Models\Exam;
 use App\Models\Question;
+use App\Models\SubTopicSubStrand;
 use App\Models\Teacher;
+use App\Models\TopicStrand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -114,10 +117,13 @@ class ExamController extends Controller
 
     public  function viewQuestion(string $id){
         $exam = Exam::find($id);
+        $education_levels = EducationLevel::get();
+        $topics =TopicStrand::get();
+        $subtopics  =SubTopicSubStrand::get();
 
         $questions = Question::where('exam_id', $id)->get();
 
-        return view('teachers.view_exam_questions', compact('exam', 'questions'));
+        return view('teachers.view_exam_questions', compact('exam', 'questions','education_levels','subtopics','topics'));
     }
 
 }
