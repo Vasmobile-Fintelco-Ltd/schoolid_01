@@ -83,6 +83,12 @@
                                 <span> Transactions </span>
                             </a>
                         </li>
+                        <li class="side-nav-item">
+                            <a href="{{ route('get_brain_game_transactions') }}" class="side-nav-link">
+                                <i class="uil-dollar-sign"></i>
+                                <span>Brain Game Transactions </span>
+                            </a>
+                        </li>
 
                         <li class="side-nav-item">
                             <a href="#" class="side-nav-link">
@@ -90,6 +96,7 @@
                                 <span> Students Report </span>
                             </a>
                         </li>
+
 
 
                     </ul>

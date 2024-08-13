@@ -17,6 +17,7 @@ use App\Models\Teacher;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TeacherCreated;
+use App\Models\BrainGameTranscation;
 use Illuminate\Support\Facades\Session;
 
 
@@ -65,6 +66,16 @@ class AdminController extends Controller
         $transactions = MpesaTransaction::all();
         return view('admin.transactions', compact('transactions'));
     }
+      //Display Transaction Details
+      public function get_brain_game_transactions(){
+        $transactions = BrainGameTranscation::
+        join('students','brain_game_transcations.student_id','=','students.id')->
+        join('users','students.user_id','=','users.id')->
+        select('brain_game_transcations.*','users.name as student_name')->get();
+        return view('admin.brain_game_transcations', compact('transactions'));
+    }
+
+    
 
     //Display teacher's Details
     public function get_teachers(){

@@ -14,6 +14,7 @@ use App\Models\Question;
 use App\Models\Result;
 use App\Models\Subject;
 use App\Models\Student;
+use App\Models\SubscriptionPlan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -46,8 +47,9 @@ class StudentController extends Controller
         // Get the centy_balance of the student and account_balance and centiisObtained and display it on the dashboard
         $centy_balance = $student->centy_balance;
         $account_balance = $student->debit;
-        $centiisObtained = $student->centiisObtained;
-        return view('students.dashboard', compact('centy_balance', 'account_balance', 'centiisObtained', 'questions_count', 'exams_count', 'exams', 'results'));
+        $centiisObtained = BrainGame::where('student_id', $student->id)->sum('yes_ans');
+        $brainGameresults= BrainGame::where('student_id', $student->id)->get();
+        return view('students.dashboard', compact('centy_balance', 'account_balance', 'centiisObtained', 'questions_count', 'exams_count', 'exams', 'results','brainGameresults'));
 
     }
 
@@ -87,24 +89,27 @@ class StudentController extends Controller
 
     public function showQuestions($examId)
     {
+        //dd($examId);
         // Retrieve the authenticated user
         $user = auth()->user();
 
         // Retrieve the corresponding student record based on the user's ID
         $student = Student::where('user_id', $user->id)->first();
+         //to be uncommented
 
-        if (!$student) {
-            // Handle the case where the student record does not exist
-            return redirect()->back()->with('error', 'Student record not found.');
-        }
+        // if (!$student) {
+        //     // Handle the case where the student record does not exist
+        //     return redirect()->back()->with('error', 'Student record not found.');
+        // }
 
         // Check if a result exists for the given student and exam
-        $result = Result::where('student_id', $student->id)->where('exam_id', $examId)->first();
+        //to be uncommented
+       // $result = Result::where('student_id', $student->id)->where('exam_id', $examId)->first();
 
-        if ($result) {
-            // Redirect to the view_result route with the result ID parameter
-            return redirect()->route('students.view_results', ['result' => $result]);
-        }
+        // if ($result) {
+        //     // Redirect to the view_result route with the result ID parameter
+        //     return redirect()->route('students.view_results', ['result' => $result]);
+        // }
 
         $exam = Exam::findOrFail($examId);
         $questions = $exam->questions;
@@ -115,6 +120,9 @@ class StudentController extends Controller
             $question = [
                 'numb' => $key + 1,
                 'question' => $question['question'],
+                'question_type' => $question['question_type'],
+                'year' => $question['year'],
+                'curriculum' => $question['curriculum'],                
                 'answer' => $question['answer'],
                 'options' => [
                     $question['option1'],
@@ -266,11 +274,26 @@ class StudentController extends Controller
     {
         $user = Auth::user();
         $student = Student::where('user_id', $user->id)->first();
+        if (!$student) {
+            // Handle the case where the student record does not exist
+            return redirect()->back()->with('error', 'Student record not found.');
+        }
+
+        // Check if a result exists for the given student and exam
+        //$result = BrainGame::where('student_id', $student->id)->first();
+
+     
+
+
+
+        $subscription_plans =SubscriptionPlan::where('name', 'brain_game')->get();
+  
 
 
         // Retrieve questions
         $questions = Question::where('education_level_id', $student->educationLevel->id)
-            ->inRandomOrder()
+            ->where('levelquestion', 'brain_game')
+           // ->inRandomOrder()
             ->take(10) // Change the number to the desired amount of questions
             ->get();
 
@@ -282,6 +305,9 @@ class StudentController extends Controller
                 'numb' => $key + 1,
                 'question' => $question['question'],
                 'answer' => $question['answer'],
+                'question_type' => $question['question_type'],
+                'year' => $question['year'],
+                'curriculum' => $question['curriculum'],
                 'options' => [
                     $question['option1'],
                     $question['option2'],
@@ -295,7 +321,7 @@ class StudentController extends Controller
 
         Log::info($formatedQuestions);
 
-        return view('students.brain_game', compact('formatedQuestions', 'questions', 'user', 'student'));
+        return view('students.brain_game', compact('formatedQuestions', 'questions', 'user', 'student','subscription_plans'));
     }
 
     public function submitBrainGame(Request $request){
@@ -322,10 +348,39 @@ class StudentController extends Controller
             'result_json' => json_encode($request->input('result_json')), // Store the answers in JSON format
             'marks_obtained' => $marksObtained, // Store the marks obtained
         ]);
-
+       
         $brain_result->save();
+        Student::where('id', $student->id)->update(['brain_game_status' => '0']);
+
         return redirect()->route('students.brain_game_results', ['result' => $brain_result->id])->with('success', 'Answers submitted successfully.');
 
+    }
+    public function activateBrainGame(Request $request)
+    {
+       
+
+        $request->validate([
+            'student_id' => 'required',
+            'subscription_plan_name' => 'required',
+            'subscription_plan_price' => 'required',
+        ]);
+
+        $student = Student::findOrFail($request->student_id);
+        $guardian =  $student->guardian()->first();
+        $user = User::findOrFail($student->user_id);
+
+        $response = (new MpesaTransactionController)->customerMpesaSTKPush($guardian->user->phone_number, $request->subscription_plan_price, $user->centy_plus_id, $request->subscription_plan_name);
+        $response = json_decode($response, true);
+
+        if ($response["ResponseCode"] == "0") {
+            $student->account_status = AccountStatus::PENDING;
+            $student->save();
+        }
+
+        return response()->json([
+            "success" => $response["ResponseCode"],
+            "message" => $response["ResponseDescription"] . " Check your phone for a prompt to complete the payment."
+        ]);
     }
 
 

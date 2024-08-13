@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Enums\AccountStatus;
 use App\Helpers\GeneralHelper;
+use App\Models\BrainGameTranscation;
 use App\Models\MpesaTransaction;
 use App\Models\Student;
 use App\Models\ChartOfAccounts;
@@ -142,6 +143,7 @@ class MpesaTransactionController extends Controller
         $user = User::where('centy_plus_id', $centyPlusId)->first();
         $student = Student::where('user_id', $user->id)->first();
         $plan = SubscriptionPlan::where('name', $planName)->first();
+      
 
         // check if transaction amount is insufficient
         if ($content->TransAmount < $plan->price) {
@@ -155,6 +157,20 @@ class MpesaTransactionController extends Controller
                 "C2BPaymentConfirmationResult"=>"Insufficient Amount"
             ]));
             return $response;
+        }
+          //update payment for brain game 
+        if ($planName == 'brain_game') {
+            Student::where('id', $student->id)->update(['brain_game_status' => '1']); 
+            
+            //insert brain game transcation 
+            $game_trans = new BrainGameTranscation();
+            $game_trans->student_id = $student->id;
+            $game_trans->amount = $content->TransAmount;
+            $game_trans->centi20 = $content->TransAmount * 0.5;
+            $game_trans->centi15 = $content->TransAmount * 0.375;
+            $game_trans->centi5 = $content->TransAmount * 0.125;
+            $game_trans->trans_id = $content->TransID;
+            $game_trans->save();
         }
 
         $chart_of_account = ChartOfAccounts::where('account_name', 'Business Account')->first();

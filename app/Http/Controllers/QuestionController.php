@@ -46,43 +46,63 @@ class QuestionController extends Controller
      * Store a newly created resource in storage.
      */
 
-    public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'exam_id' => 'required',
-            'education_level_id' => 'required|array',
-            'education_level_id.*' => 'required',
-            'subtopic_id' => 'required',
-            'topic_id' => 'required',
-            'questions' => 'required|array',
-            'questions.*' => 'required',
-            'option1' => 'required|array',
-            'option1.*' => 'required',
-            'option2' => 'required|array',
-            'option2.*' => 'required',
-            'option3' => 'required|array',
-            'option3.*' => 'required',
-            'option4' => 'required|array',
-            'option4.*' => 'required',
-            'answer' => 'required|array',
-            'answer.*' => 'required',
-        ]);
+     public function store(Request $request)
+     {
+      
+         // Basic validation for static fields
+         $validatedData = $request->validate([
+             'exam_id' => 'required',
+             'education_level_id' => 'required|array',
+             'education_level_id.*' => 'required',
+             'subtopic_id.*' => 'required',
+             'topic_id.*' => 'required',
+             'questions' => 'required|array',
+             'questions.*' => 'required',
+             'question_type' => 'required|array',  // Ensure question_type is validated as an array
+             'question_type.*' => 'in:multiple_choice,no_option', // Validate that each question_type is either multiple_choice or no_option
 
-        $createdQuestions = [];
+         ]);
+         
+         // Conditional validation based on question_type
+         foreach ($request->input('question_type') as $key => $value) {
+             if ($value === 'multiple_choice') {
+                 $request->validate([
+                     "option1.{$key}" => 'required',
+                     "option2.{$key}" => 'required',
+                     "option3.{$key}" => 'required',
+                     "option4.{$key}" => 'required',
+                     "answer.{$key}" => 'required',
+                 ]);
+             }
+         }
+     
+         $createdQuestions = [];
+     
+         foreach ($validatedData['questions'] as $index => $question) {
+             $newQuestionData = [
+                 'exam_id' => $validatedData['exam_id'],
+                 'sub_topic_sub_strand_id' => $request->subtopic_id,
+                 'topic_strand_id' =>  $request->topic_id,
+                 'question' => $question,
+                 'question_type' => $request->input('question_type')[$index],
+                 'year' => $request->input('year')[$index],
+                 'curriculum' => $request->input('curriculum')[$index],
+                 'levelquestion' => $request->input('levelquestion')[$index],
+             ];
+             
+             // Add options and answer for multiple choice questions
+             if ($request->input('question_type')[$index] === 'multiple_choice') {
+                 $newQuestionData['option1'] = $request->input('option1')[$index];
+                 $newQuestionData['option2'] = $request->input('option2')[$index];
+                 $newQuestionData['option3'] = $request->input('option3')[$index];
+                 $newQuestionData['option4'] = $request->input('option4')[$index];
+             }
+            
 
-        foreach ($validatedData['questions'] as $index => $question) {
-            $newQuestionData = [
-                'exam_id' => $validatedData['exam_id'],
-                'sub_topic_sub_strand_id' => $validatedData['subtopic_id'],
-                'topic_strand_id' => $validatedData['topic_id'],
-                'question' => $question,
-                'option1' => $request->input('option1')[$index],
-                'option2' => $request->input('option2')[$index],
-                'option3' => $request->input('option3')[$index],
-                'option4' => $request->input('option4')[$index],
-            ];
 
-            // Set the answer based on the selected option
+               // Set the answer based on the selected option
+               if ($request->input('question_type')[$index] === 'multiple_choice') {
+                
             $answer = $request->input('answer')[$index];
             switch ($answer) {
                 case 'option1':
@@ -98,25 +118,29 @@ class QuestionController extends Controller
                     $newQuestionData['answer'] = $request->input('option4')[$index];
                     break;
             }
-
-            if (isset($validatedData['education_level_id'][$index])) {
-                $newQuestionData['education_level_id'] = $validatedData['education_level_id'][$index];
-            }
-
-            if ($request->hasFile('image_' . $index + 1)) { // Use 'image_' . $index to get the correct file for each question
-                $image = $request->file('image_' . $index + 1);
-                $imageName = time() . '_' .  $index + 1 . '.' . $image->getClientOriginalExtension();
-                $image->storeAs('assets/images/exam_images', $imageName);
-                $newQuestionData['image'] = 'assets/images/exam_images/' . $imageName;
-            }
-
-            $newQuestion = Question::create($newQuestionData);
-            $createdQuestions[] = $newQuestion;
         }
 
-        return redirect()->route('get_exams')->with('success', 'Questions created successfully!');
-    }
-
+     
+             if (isset($validatedData['education_level_id'][$index])) {
+                 $newQuestionData['education_level_id'] = $validatedData['education_level_id'][$index];
+             }
+     
+             if ($request->hasFile('image_' . ($index + 1))) { // Use 'image_' . ($index + 1) to get the correct file for each question
+                 $image = $request->file('image_' . ($index + 1));
+                 $imageName = time() . '_' . ($index + 1) . '.' . $image->getClientOriginalExtension();
+                 $image->storeAs('assets/images/exam_images', $imageName);
+                 $newQuestionData['image'] = 'assets/images/exam_images/' . $imageName;
+             }
+             //dd($newQuestionData);
+     
+             $newQuestion = Question::create($newQuestionData);
+             //dd($newQuestion);
+             $createdQuestions[] = $newQuestion;
+         }
+     
+         return redirect()->route('get_exams')->with('success', 'Questions created successfully!');
+     }
+     
 
     public function getEducationLevels(Request $request)
     {
@@ -164,76 +188,95 @@ class QuestionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
-            // Validate the incoming data
+       
+      
+            // Basic validation for static fields
             $validatedData = $request->validate([
                 'exam_id' => 'required',
-                'education_level_id' => 'required',
-                'subtopic_id' => 'required',
-                'topic_id' => 'required',
-                'question' => 'required',
-                'option1' => 'required|array',
-                'option1.*' => 'required',
-                'option2' => 'required|array',
-                'option2.*' => 'required',
-                'option3' => 'required|array',
-                'option3.*' => 'required',
-                'option4' => 'required|array',
-                'option4.*' => 'required',
-                'answer' => 'required|array',
-                'answer.*' => 'required',
+                'education_level_id' => 'required|array',
+                'education_level_id.*' => 'required',
+                'subtopic_id.*' => 'required',
+                'topic_id.*' => 'required',
+                'questions' => 'required|array',
+                'questions.*' => 'required',
+                'question_type' => 'required|array',  // Ensure question_type is validated as an array
+                'question_type.*' => 'in:multiple_choice,no_option', // Validate that each question_type is either multiple_choice or no_option
             ]);
-
+    
+            // Conditional validation based on question_type
+            foreach ($request->input('question_type') as $key => $value) {
+                if ($value === 'multiple_choice') {
+                    $request->validate([
+                        "option1.{$key}" => 'required',
+                        "option2.{$key}" => 'required',
+                        "option3.{$key}" => 'required',
+                        "option4.{$key}" => 'required',
+                    ]);
+                }
+            }
+    
             // Find the question by ID
             $question = Question::find($id);
-
+        
+    
             if (!$question) {
                 return redirect()->back()->with('error', 'Question not found');
             }
-
-            // Update the question data
-            $question->exam_id = $validatedData['exam_id'];
-            $question->sub_topic_sub_strand_id = $validatedData['subtopic_id'];
-            $question->topic_strand_id = $validatedData['topic_id'];
-            $question->question = $validatedData['question'];
-            $question->option1 = $validatedData['option1'][0];
-            $question->option2 = $validatedData['option2'][0];
-            $question->option3 = $validatedData['option3'][0];
-            $question->option4 = $validatedData['option4'][0];
-            $question->education_level_id = $validatedData['education_level_id'];
-
-            // Set the answer based on the selected option
-            $answer = $validatedData['answer'][0];
-            switch ($answer) {
-                case 'option1':
-                    $question->answer = $validatedData['option1'][0];
-                    break;
-                case 'option2':
-                    $question->answer = $validatedData['option2'][0];
-                    break;
-                case 'option3':
-                    $question->answer = $validatedData['option3'][0];
-                    break;
-                case 'option4':
-                    $question->answer = $validatedData['option4'][0];
-                    break;
+    
+            foreach ($validatedData['questions'] as $index => $questionText) {
+                // Update the question data
+                $question->exam_id = $validatedData['exam_id'];
+                $question->sub_topic_sub_strand_id = $request->subtopic_id[$index];
+                $question->topic_strand_id = $request->topic_id[$index];
+                $question->question = $questionText;
+                $question->question_type = $request->input('question_type')[$index];
+                $question->year = $request->input('year')[$index];
+                $question->curriculum = $request->input('curriculum')[$index];
+              //  $question->levelquestion = $request->input('levelquestion')[$index];
+    
+                if ($request->input('question_type')[$index] === 'multiple_choice') {
+                    $question->option1 = $request->input('option1')[$index];
+                    $question->option2 = $request->input('option2')[$index];
+                    $question->option3 = $request->input('option3')[$index];
+                    $question->option4 = $request->input('option4')[$index];
+    
+                    // Set the answer based on the selected option
+                    $answer = $request->input('answer')[$index];
+                    switch ($answer) {
+                        case 'option1':
+                            $question->answer = $request->input('option1')[$index];
+                            break;
+                        case 'option2':
+                            $question->answer = $request->input('option2')[$index];
+                            break;
+                        case 'option3':
+                            $question->answer = $request->input('option3')[$index];
+                            break;
+                        case 'option4':
+                            $question->answer = $request->input('option4')[$index];
+                            break;
+                    }
+                }
+    
+                if (isset($validatedData['education_level_id'][$index])) {
+                    $question->education_level_id = $validatedData['education_level_id'][$index];
+                }
+    
+                if ($request->hasFile('image_' . ($index + 1))) { // Use 'image_' . ($index + 1) to get the correct file for each question
+                    $image = $request->file('image_' . ($index + 1));
+                    $imageName = time() . '_' . ($index + 1) . '.' . $image->getClientOriginalExtension();
+                    $image->storeAs('assets/images/exam_images', $imageName);
+                    $question->image = 'assets/images/exam_images/' . $imageName;
+                }
+                //dd($question);
+                // Save the updated question
+                $question->save();
             }
-
-            if ($request->hasFile('image')) {
-                $image = $request->file('image');
-                $imageName = time() . '_updated.' . $image->getClientOriginalExtension();
-                $image->storeAs('assets/images/exam_images', $imageName);
-                $question->image = 'assets/images/exam_images/' . $imageName;
-            }
-
-            $question->save();
-
+    
             return redirect()->route('view_exam_questions', ['id' => $question->exam_id])->with('success', 'Question updated successfully!');
-        } catch (Exception $e) {
-            Log::error($e->getMessage());
-            return redirect()->back()->with('error', 'An error occurred during the update.');
-        }
+        
     }
+    
 
     /**
      * Remove the specified resource from storage.

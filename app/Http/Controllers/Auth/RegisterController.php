@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\Guardian;
+use App\Models\Nonstudent;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -58,5 +59,25 @@ class RegisterController extends Controller
     {
         Auth::guard('web')->logout();
         return redirect()->route('login');
+    }
+
+    protected function nonstudent(Request $request)
+    {
+      
+
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone_number' => $request->phone_number,
+            'password' => Hash::make($request->password),
+            'role' => 'nonstudent',
+        ]);
+        $nonstudent = new Nonstudent();
+        $nonstudent->user_id = $user->id;
+        $nonstudent->save();
+        
+        echo $user->centy_plus_id;
+        return $user;
     }
 }
