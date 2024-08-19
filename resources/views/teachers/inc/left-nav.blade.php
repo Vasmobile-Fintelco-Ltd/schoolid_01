@@ -91,6 +91,12 @@
                     <span> Exams </span>
                 </a>
             </li>
+            <li class="side-nav-item">
+                <a href="{{ route('view_game') }}" class="side-nav-link">
+                    <i class="uil-notes"></i>
+                    <span> Brain Game  </span>
+                </a>
+            </li>
 
 
             <li class="side-nav-item">

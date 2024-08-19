@@ -124,6 +124,12 @@ Route::prefix('teacher')->middleware([ 'isTeacher'])->group(function(){
     Route::post('/edit-exams/{id}', [ExamController::class, 'update'])->name('update_exams');
     Route::delete('/delete-exams/{id}', [ExamController::class, 'destroy'])->name('delete_exams');
     Route::get('/view-questions/{id}', [ExamController::class, 'viewQuestion'])->name('view_exam_questions');
+
+    Route::post('/brain-game', [QuestionController::class, 'addGame'])->name('add_game');
+    Route::get('/view/brain-game', [QuestionController::class, 'viewGame'])->name('view_game');
+    Route::get('/post/brain-game', [QuestionController::class, 'postGame'])->name('post_game');
+    Route::delete('/delete-game/{id}', [QuestionController::class, 'gameDestroy'])->name('delete_game');
+    Route::post('/edit-game/{id}', [QuestionController::class, 'updateGame'])->name('update_game');
 });
 
 Route::prefix('student')->middleware(['auth', 'isStudent'])->group(function(){

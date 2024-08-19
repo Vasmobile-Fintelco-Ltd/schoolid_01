@@ -6,6 +6,7 @@ use App\Enums\AccountStatus;
 use App\Enums\ExamType;
 use App\Models\BrainGame;
 use App\Models\Exam;
+use App\Models\Game;
 use App\Models\StudentSubscriptionPlan;
 use App\Models\Teacher;
 use App\Models\User;
@@ -291,10 +292,7 @@ class StudentController extends Controller
 
 
         // Retrieve questions
-        $questions = Question::where('education_level_id', $student->educationLevel->id)
-            ->where('levelquestion', 'brain_game')
-           // ->inRandomOrder()
-            ->take(10) // Change the number to the desired amount of questions
+        $questions = Game::take(20) // Change the number to the desired amount of questions
             ->get();
 
         Log::info('random questions'. $questions);
