@@ -11,7 +11,7 @@
     @if ($questions->isEmpty())
         <p>No questions available for this exam.</p>
     @else
-    @if ($student->brain_game_status == 1)
+    @if ($student->brain_game_status == 0)
     <div class="start_btn"><button>Start Quiz</button></div> 
     
    
