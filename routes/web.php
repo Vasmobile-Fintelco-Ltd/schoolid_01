@@ -43,6 +43,15 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/otp/enter', [OTPVerificationController::class, 'enterOTP'])->name('otp.enter');
 Route::post('/otp/validate', [OTPVerificationController::class, 'validateOTP'])->name('otp.validate');
 Route::post('/nonstudent', [RegisterController::class, 'nonstudent'])->name('nonstudent');
+//new register
+Route::post('/signup', [RegisterController::class, 'register'])->name('signup');
+Route::get('/otp', [RegisterController::class, 'showOtpForm'])->name('otp');
+Route::post('/verify-otp', [RegisterController::class, 'verifyOtp'])->name('verify-otp');
+Route::get('/set-pin', [RegisterController::class, 'showSetPinForm'])->name('set-pin');
+Route::post('/submit/set-pin', [RegisterController::class, 'setPin'])->name('submit-pin');
+
+
+
 
 Route::prefix('/admin')->middleware(['isAdmin'])->group(function(){
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
