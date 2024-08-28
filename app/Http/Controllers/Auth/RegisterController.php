@@ -180,7 +180,6 @@ class RegisterController extends Controller
             $nonstudent = new Nonstudent();
             $nonstudent->user_id = $user->id;
             $nonstudent->brain_game_status = 0;
-            $nonstudent->active_subscription = 0;
             $nonstudent->phone_number = Session::get('phone_number');
             $nonstudent->save();
         }
