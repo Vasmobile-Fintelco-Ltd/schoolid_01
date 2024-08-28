@@ -19,7 +19,7 @@ data-responsive-width="992px">
            <div class="row card-group-row" style="margin-top: 3rem !important;">
 
                <div class="col-md-6 col-lg-4 card-group-row__col">
-
+                          
                    <div class="card card--elevated posts-card-popular overlay card-group-row__card">
                        
 
@@ -31,10 +31,11 @@ data-responsive-width="992px">
                        <div class="posts-card-popular__content mt-3">
                            <div class="posts-card-popular__title card-body">
                                <a class="card-title "
-                                  href="{{ route('nonstudent_brain_game') }}">Brain Game</a>
+                                  href="{{ route('nonstudent_brain_game') }}">Brain Game </a>
                            </div>
                        </div>
                    </div>
+           
 
                </div>
 
