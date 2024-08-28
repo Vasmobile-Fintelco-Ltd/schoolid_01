@@ -13,7 +13,7 @@
 <section class="signup-wrapper">
     <div class="container">
         <div class="logo-signup">
-            <a href="index.html">
+            <a href="http://examind.skoolid.africa/">
                 <img src="{{ asset('ui/assets/images/logo/logo-skoolid.png')}}">
             </a>
         </div>
