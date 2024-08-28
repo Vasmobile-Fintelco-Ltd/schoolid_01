@@ -86,9 +86,7 @@ class RegisterController extends Controller
     }
 
     public function register(Request $request) {
-      
-        // Validate the form data
-    
+        
         // Create the user and save OTP in session or DB
         $otp = rand(1000, 9999);
         $name =  $request->name;
@@ -142,6 +140,7 @@ class RegisterController extends Controller
    
         //dd(session()->all());
         // Assuming user data is stored in the session after OTP verification
+        
         $hashedPassword = bcrypt($request->pin);   
       
         $user = User::create([
