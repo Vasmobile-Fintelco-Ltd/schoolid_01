@@ -1,12 +1,12 @@
  <!-- ========== Left Sidebar Start ========== -->
- <div class="leftside-menu">
+ <div class="leftside-menu" style="background: #16459e">
 
-     <a href="" class="logo text-center logo-light">
+     <a href="" class="logo text-center logo-light" style="background: #16459e !important">
         <span class="logo-lg">
-            <img src="{{ asset('assets/images/centyplus logo.png') }}" alt="" height="60">
+            <img src="{{ asset('back/public/images/illustration/student/128/skoolid-logo.png') }}" alt="" height="40" style="float: left; margin-top:15px;">
         </span>
          <span class="logo-sm">
-            <img src="{{ asset('assets/images/centyplus logo.png') }}" alt="" height="60">
+            <img src="{{ asset('back/public/images/illustration/student/128/skoolid-logo.png') }}" alt="" height="40">
         </span>
      </a>
 
@@ -15,45 +15,39 @@
         <!--- Sidemenu -->
         <ul class="side-nav">
 
-            <li class="side-nav-title side-nav-item">Navigation</li>
+            <li class="side-nav-title side-nav-item">Student</li>
 
             <li class="side-nav-item">
                 <a href="{{ route('student.dashboard')}}" class="side-nav-link">
-                    <i class="uil-home-alt"></i>
-                    <span> Dashboard </span>
+                    <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">home</span>
+                    <span> Home </span>
                 </a>
             </li>
 
 
 
             <li class="side-nav-item">
-                <a href="{{ route('view_exams') }}" class="side-nav-link">
-                    <i class="uil-book-open"></i>
-                    <span> Exams </span>
-                </a>
-            </li>
-
-            <li class="side-nav-item">
-                <a href="{{ route('view_questions') }}" class="side-nav-link">
-                    <i class="uil-book-reader"></i>
-                    <span> Questions </span>
-                </a>
-            </li>
-
-            <li class="side-nav-item">
-                <a href="{{ route('student_brain_game') }}" class="side-nav-link">
-                    <i class="uil-game-structure"></i>
-                    <span> Brain Game </span>
+                <a href="#" class="side-nav-link">
+                    <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">style</span>
+                    <span> Results </span>
                 </a>
             </li>
 
             <li class="side-nav-item">
                 <a href="#" class="side-nav-link">
-                    <i class="uil-graph-bar"></i>
-                    <span> Results </span>
+                    <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">assignment_turned_in</span>
+                    <span> Wallet </span>
                 </a>
             </li>
 
+            <li class="side-nav-item">
+                <a href="#" class="side-nav-link">
+                    <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">timeline</span>
+                    <span> Referral </span>
+                </a>
+            </li>
+
+          
 
 
         </ul>

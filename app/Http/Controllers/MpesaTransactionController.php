@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Response;
 
 use Illuminate\Http\Request;
+use App\Models\UserSubscription;
 use Illuminate\Support\Facades\Log;
 
 class MpesaTransactionController extends Controller
@@ -45,16 +46,17 @@ class MpesaTransactionController extends Controller
 
     /**
      * Lipa na M-PESA STK Push method
-     * */
+     * */ 
 
-    public function customerMpesaSTKPush($phone_number, $amount, $centyPlusId, $planName)
+    public function customerMpesaSTKPush($phone_number, $cost, $user, $plan)
     {
         $url = 'https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json','Authorization:Bearer '.$this->generateAccessToken()));
 
-        $formattedAmount = number_format($amount, 0, '', '');
+        $formattedAmount = number_format($cost, 0, '', '');
+  
 //        $formattedPhoneNumber = '254' . substr($phone_number, 1);
         $formattedPhoneNumber = GeneralHelper::phoneNumberToInternational($phone_number);
         if (empty($formattedPhoneNumber)) {
@@ -75,9 +77,9 @@ class MpesaTransactionController extends Controller
             'PartyA' => $formattedPhoneNumber, // replace this with your phone number
             'PartyB' => 4113243,
             'PhoneNumber' => $formattedPhoneNumber, // replace this with your phone number
-            'CallBackURL' => 'https://quiz.centyplus.africa/api/v1/quiz/transaction/confirmation/',
-            'AccountReference' => $centyPlusId.' '.$planName,
-            'TransactionDesc' => "Centy Plus $planName Payment"
+            'CallBackURL' => 'https://examind.skoolid.africa/api/v1/quiz/transaction/confirmation/',
+            'AccountReference' => $user.' '.$plan,
+            'TransactionDesc' => "Centy Plus $plan Payment"
         ];
         $data_string = json_encode($curl_post_data);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -137,19 +139,16 @@ class MpesaTransactionController extends Controller
         $mpesa_transaction->save();
 
         $accRef = explode(' ', $content->BillRefNumber);
-        $planName = $accRef[1];
-        $centyPlusId = $accRef[0];
+        $plan = $accRef[1];
+        $user = $accRef[0];
+        $cost = $content->TransAmount;
 
-        $user = User::where('centy_plus_id', $centyPlusId)->first();
-        $student = Student::where('user_id', $user->id)->first();
-        $plan = SubscriptionPlan::where('name', $planName)->first();
+        $user = User::where('id', $user)->first();
       
 
         // check if transaction amount is insufficient
-        if ($content->TransAmount < $plan->price) {
-            // add surplus to the parent account
-            $student->guardian->credit = floatval($student->guardian->credit) + $content->TransAmount;
-            $student->guardian->save();
+        if ($content->TransAmount < $plan) {
+            // add surplus to the parent account         
 
             $response = new Response();
             $response->headers->set("Content-Type","text/xml; charset=utf-8");
@@ -159,45 +158,69 @@ class MpesaTransactionController extends Controller
             return $response;
         }
           //update payment for brain game 
-        if ($planName == 'brain_game') {
-            Student::where('id', $student->id)->update(['brain_game_status' => '1']); 
-            
+     
             //insert brain game transcation 
             $game_trans = new BrainGameTranscation();
-            $game_trans->student_id = $student->id;
+            $game_trans->student_id = $user;
             $game_trans->amount = $content->TransAmount;
             $game_trans->centi20 = $content->TransAmount * 0.5;
             $game_trans->centi15 = $content->TransAmount * 0.375;
             $game_trans->centi5 = $content->TransAmount * 0.125;
             $game_trans->trans_id = $content->TransID;
             $game_trans->save();
-        }
-
+        
         $chart_of_account = ChartOfAccounts::where('account_name', 'Business Account')->first();
-        $chart_of_account->account_balance = $chart_of_account->account_balance + $plan->price/2;
+        $chart_of_account->account_balance = $chart_of_account->account_balance + $plan/2;
         $chart_of_account->save();
 
         // add surplus to the parent account
-        $student->guardian->credit = floatval($student->guardian->credit) + ($content->TransAmount - $plan->price);
-        $student->guardian->save();
+
+        $use = User::find($user);
+        $use->payment_status = 1;
+        $use->save();
+       
 
         // Create or Update student subscription plan
+         // Extract plan type and duration
+        $planParts = explode('_', $plan);
+
+        if (count($planParts) !== 2) {
+        return back()->withErrors(['Invalid plan format']);
+        }
+        $type = $planParts[0];  // daily, weekly, or monthly
+        $duration = (int)$planParts[1];  
         $start_date  = Carbon::now();
-        $end_date = Carbon::now()->addDays($plan->validity);
-        $studentSubscription = StudentSubscriptionPlan::updateOrCreate(
-            ['student_id' => $student->id],
+
+        switch ($type) {
+            case 'daily':
+                $end_date = $start_date->copy()->addDays($duration);
+                break;
+    
+            case 'weekly':
+                $end_date = $start_date->copy()->addWeeks($duration);
+                break;
+    
+            case 'monthly':
+                $end_date = $start_date->copy()->addMonths($duration);
+                break;
+    
+            default:
+                return back()->withErrors(['Invalid plan type']);
+        }
+
+        $studentSubscription = UserSubscription::updateOrCreate(
+            ['user_id' => $user->id],
             [
-                'subscription_plan_id' => $plan->id,
+                'plan' => $plan,
+                'cost' => $cost,
                 'start_date' => $start_date,
                 'end_date' => $end_date,
+                'status' => 1,
             ]
         );
 
         // update student centy balance
-        $student->centy_balance = floatval($student->centy_balance) + $plan->price/2;
-        $student->account_status = AccountStatus::ACTIVE;
-        $student->active_subscription = $studentSubscription->id;
-        $student->save();
+     
 
         // Responding to the confirmation request
         $response = new Response();
@@ -350,8 +373,8 @@ class MpesaTransactionController extends Controller
         curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode(array(
             'ShortCode' => "4113243",
             'ResponseType' => 'Completed',
-            'ConfirmationURL' => "https://quiz.centyplus.africa/api/v1/hlab/transaction/confirmation",
-            'ValidationURL' => "https://quiz.centyplus.africa/api/v1/hlab/validation"
+            'ConfirmationURL' => "https://examind.skoolid.africa/api/v1/hlab/transaction/confirmation",
+            'ValidationURL' => "https://examind.skoolid.africa/api/v1/hlab/validation"
         )));
         $curl_response = curl_exec($curl);
         echo $curl_response;

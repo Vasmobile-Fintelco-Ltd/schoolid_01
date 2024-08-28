@@ -24,15 +24,33 @@
                     <form method="POST" action="{{ route('submit-pin') }}" style="box-shadow: none; padding:20px 10px;">
                         @csrf
                         <div class="form-group">
-                            <input id="password" type="password" pattern="\d*" inputmode="numeric" minlength="4" maxlength="4" placeholder="Enter 4-digit PIN" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                            {{-- <input type="password" name="password" class="form-control" id="exampleInputEmail" aria-describedby="email" placeholder="Enter Pin" min="4" max="4"> --}}
+                            <input 
+                                id="password" 
+                                name="pin" 
+                                type="password" 
+                                pattern="\d*" 
+                                inputmode="numeric" 
+                                minlength="4" 
+                                maxlength="4" 
+                                placeholder="Enter 4-digit PIN" 
+                                class="form-control @error('pin') is-invalid @enderror" 
+                                required 
+                                autocomplete="new-password">
                         </div>
+                        
                         <div class="form-group">
-
-                            <input id="password-confirm" type="password" pattern="\d*" inputmode="numeric" minlength="4" maxlength="4" placeholder="Confirm 4-digit PIN" class="form-control" name="password_confirmation" required autocomplete="new-password">
-
-                           {{-- input type="password" class="form-control" id="exampleInputPin" aria-describedby="emailPin" placeholder="Confirm Pin"> --}}
+                            <input 
+                                id="password-confirm" 
+                                name="pin_confirmation" 
+                                type="password" 
+                                pattern="\d*" 
+                                inputmode="numeric" 
+                                minlength="4" 
+                                maxlength="4" 
+                                placeholder="Confirm 4-digit PIN" 
+                                class="form-control" 
+                                required 
+                                autocomplete="new-password">
                         </div>
                         <button class="btn btn-primary" type="submit">Submit</button>
                       </form>
@@ -41,7 +59,18 @@
         </div>
     </section>
 
-
+    <script>
+        document.getElementById('password-confirm').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            
+            if (password !== confirmPassword) {
+                this.setCustomValidity('The PINs do not match.');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+        </script>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

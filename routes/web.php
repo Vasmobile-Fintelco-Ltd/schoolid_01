@@ -11,6 +11,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\GuardianController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ChatGPTController;
 use App\Http\Controllers\ChatsGPTController;
@@ -49,6 +50,18 @@ Route::get('/otp', [RegisterController::class, 'showOtpForm'])->name('otp');
 Route::post('/verify-otp', [RegisterController::class, 'verifyOtp'])->name('verify-otp');
 Route::get('/set-pin', [RegisterController::class, 'showSetPinForm'])->name('set-pin');
 Route::post('/submit/set-pin', [RegisterController::class, 'setPin'])->name('submit-pin');
+
+//Route::get('loginUser', [LoginController::class, 'showLoginForm'])->name('logincUser');
+Route::post('logout', [LoginController::class, 'logoutt'])->name('logout');
+
+Route::get('payment_form', [LoginController::class, 'showPlanForm'])->name('payment_form');
+Route::post('subscribe_payment', [LoginController::class, 'subscribeUser'])->name('subscribe_payment');
+// web.php
+Route::get('/payment', [LoginController::class, 'showPaymentPage'])->name('payment_page');
+Route::post('/user_login', [LoginController::class, 'userLogin'])->name('user_login');
+
+Route::get('payment_plan', [LoginController::class, 'showPaymentForm'])->name('payment.user');
+Route::post('submit_plan', [LoginController::class, 'userSubscribe'])->name('submit_plan');
 
 
 
@@ -145,6 +158,7 @@ Route::prefix('student')->middleware(['auth', 'isStudent'])->group(function(){
     Route::get('/', [StudentController::class, 'index'])->name('student.dashboard');
     Route::get('/view_exams', [StudentController::class, 'getExams'])->name('view_exams');
     Route::get('/brain_game', [StudentController::class, 'brainGame'])->name('student_brain_game');
+    Route::get('/brain_game_play', [StudentController::class, 'brainGame'])->name('brain_game_play');
     Route::get('/view_questions', [StudentController::class, 'getSubjects'])->name('view_questions');
     Route::get('/questions/{exam}', [StudentController::class, 'showQuestions'])->name('show_questions');
     Route::post('/questions/{exam}', [StudentController::class, 'submitAnswers'])->name('questions.submit');

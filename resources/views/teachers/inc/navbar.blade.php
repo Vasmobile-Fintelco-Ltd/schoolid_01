@@ -1,4 +1,4 @@
-<div class="navbar-custom">
+<div class="navbar-custom shadow-lg">
     <ul class="list-unstyled topbar-menu float-end mb-0">
 
         <li class="dropdown notification-list">
@@ -129,6 +129,7 @@
                     <i class="mdi mdi-lock-outline me-1"></i>
                     <span>Lock Screen</span>
                 </a>
+                
 
                 <!-- item-->
                 <a class="dropdown-item notify-item" href="{{ route('logout') }}"

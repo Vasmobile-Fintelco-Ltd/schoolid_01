@@ -20,13 +20,13 @@
         <div class="inner-wrapper2 inner-login">
             <div class="inner-content-form">
                 <h2>Sign In👋</h2>
-                <form style="box-shadow: none; padding:20px 10px;" method="POST" action="{{ route('login') }}">
+                <form style="box-shadow: none; padding:20px 10px;" method="POST" action="{{ route('user_login') }}">
                     @csrf
                     <div class="form-group">
                       {{-- <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="email" placeholder="Enter Email Address"> --}}
-                      <input id="centy_plus_id" type="text" class="form-control @error('centy_plus_id') is-invalid @enderror"
-                       name="centy_plus_id" value="{{ old('centy_plus_id') }}" required autocomplete="centy_plus_id" autofocus>
-                       @error('centy_plus_id')
+                      <input id="email" type="text" placeholder="Enter Your email" class="form-control @error('email') is-invalid @enderror"
+                       name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                       @error('email')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                         </span>

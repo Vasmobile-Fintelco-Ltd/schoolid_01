@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\AccountStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -10,19 +11,18 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Hash;
 use App\Enums\CentyOtpVerified;
+use App\Http\Controllers\MpesaTransactionController;
 use App\Jobs\SendUserOtp;
+use App\Models\StudentSubscriptionPlan;
 use App\Models\User;
+use App\Models\UserSubscription;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
-    use AuthenticatesUsers;
 
-    protected $redirectTo = RouteServiceProvider::HOME;
 
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
+   
 
     public function username()
     {
@@ -31,6 +31,7 @@ class LoginController extends Controller
         $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'centy_plus_id'; // Determine if the input is an email or centy_plus_id
 
         request()->merge([$fieldType => $login]); // Merge the input value into the request
+      
 
         return $fieldType; // Return the field type (email or centy_plus_id)
     }
@@ -38,7 +39,7 @@ class LoginController extends Controller
     protected function attemptLogin(Request $request)
     {
         $credentials = $this->credentials($request);
-
+    
         return $this->guard()->attempt(
             $credentials,
             $request->filled('remember')
@@ -47,12 +48,13 @@ class LoginController extends Controller
 
     protected function sendFailedLoginResponse(Request $request)
     {
+       
         $errors = [$this->username() => trans('auth.failed')];
 
         if ($request->expectsJson()) {
             return response()->json($errors, 422);
         }
-
+       // dd($errors);
         return redirect()->back()
             ->withInput($request->only('centy_plus_id', 'remember'))
             ->withErrors($errors);
@@ -60,9 +62,13 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-//        if ($user->first_login) {
-//           return redirect()->route('password.reset');
-//        }
+
+     
+        
+      
+       if ($user->first_login) {
+        return view('auth.plans');
+      }
 //        if ($user->needsOTPVerification()){
 //            session(['otp_user_id' => $user->id]);
 //            app('redirect')->setIntendedUrl(route($user->role . '.dashboard'));
@@ -76,6 +82,11 @@ if (isset($user->role)) {
         } else {
             return redirect()->route('login')->with("message", "Your user type is not recognized");
         }
+        
+    }
+    public function showPlanForm()
+    {
+        return view('auth.plans');
     }
 
     public function resetPassword(Request $request)
@@ -91,5 +102,159 @@ if (isset($user->role)) {
 
         return redirect()->route('login')->with('status', 'Password reset successfully! Please Login with new password.');
     }
+
+
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+
+    public function loginUser(Request $request)
+    { //dd($request);
+        $credentials = $request->only('centy_plus_id', 'password');
+
+        $user =Auth::get();
+        dd($user);
+        if (Auth::attempt($credentials)) {
+            // Authentication passed
+            
+            return redirect()->intended('dashboard');
+        } else {
+            // Authentication failed
+            return back()->withErrors([
+                'email' => 'The provided credentials do not match our records.',
+            ]);
+        }
+    }
+
+    public function logoutt(Request $request)
+    {
+        Auth::logout();
+        return redirect('/');
+    }
+
+    public function userLogin (Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+        
+        // Attempt to authenticate the user
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            
+            // Check the user's payment status and role
+            if (in_array($user->role, ['student', 'parent', 'nonstudent'])) {
+                if ($user->payment_status == 1) {
+                    // Redirect to the appropriate dashboard if payment is active
+                    return redirect()->route($user->role . '.dashboard');
+                } else {
+                    // Redirect to payment form if payment is not active
+                    return redirect()->route('payment_form')->with('message', 'Your payment is not active. Please complete the payment.');
+                }
+            } elseif (in_array($user->role, ['teacher', 'admin'])) {
+                // Redirect to the appropriate dashboard directly for teacher and admin roles
+                return redirect()->route($user->role . '.dashboard');
+            } else {
+                // Redirect to login if the user role is not recognized
+                return redirect()->route('login')->with('message', 'Your user type is not recognized.');
+            }
+        } else {
+            // Authentication failed
+            return back()->withErrors([
+                'centy_plus_id' => 'The provided credentials do not match our records.',
+            ]);
+        }
+    }
+
+    public function subscribeUser (Request $request)
+    {
+       
+     
+        // Validate the incoming request
+        $validated = $request->validate([
+            'plan' => 'required|string',
+            'cost' => 'required|numeric',
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        // Create a subscription record or process the subscription
+        // $subscription = StudentSubscriptionPlan::create([
+        //     'student_id' => $validated['user_id'],
+        //     'subscription_plan_id' => $validated['plan'],
+        //     'cost' => $validated['cost'],
+        //     'status' => '0', // Mark as pending until payment is confirmed
+        // ]);
+
+        // Redirect to the payment page with the plan and cost
+        return redirect()->route('payment.user', [
+       
+            'plan' => $validated['plan'],
+            'cost' => $validated['cost'],
+            'user_id' => $request->user_id
+        ]);
+    }
+
+ public function showPaymentForm(Request $request)
+    {  
+      
+        $plan = $request->plan;
+        $cost = $request->cost;
+        $user_id = $request->user_id;
+
+        return view('auth.payment', compact('plan', 'cost','user_id'));
+    }
+
+    public function userSubscribe(Request $request)
+    {
+  
+
+        $request->validate([
+            'phone_number' => 'required'
+        ]);
+
+        $phone_number = $request->phone_number;
+        $user = $request->user_id;
+        $cost = $request->cost;
+        $plan = $request->plan;
+
+        $response = (new MpesaTransactionController)->customerMpesaSTKPush($phone_number, $cost, $user, $plan);
+        $response = json_decode($response, true);
+   
+
+        if ($response["ResponseCode"] == "0") {
+            try {
+                // Assuming $user, $plan, and $cost are correctly defined and hold valid values
+                DB::table('user_subscriptions')->update([
+                    'user_id' => $user, // Make sure $user is defined and holds the correct user ID
+                    'plan' => $plan, // Ensure $plan holds the correct plan information
+                    'cost' => $cost, // Ensure $cost holds the correct cost value
+                    'status' => 0, // Assuming 0 represents an initial or inactive status
+                ]);
+        
+                // Optionally return a success response or handle further logic
+            } catch (\Exception $e) {
+                // Handle any errors that occur during the save operation
+                // Log the exception or provide user feedback
+                Log::error('Error saving subscription: ' . $e->getMessage());
+                return response()->json(['error' => 'Failed to save subscription'], 500);
+            }
+        }
+
+        if ($response["ResponseCode"] === "0") {
+            // If payment request was successful, redirect back to the payment form with a message
+            return redirect()->route('payment.user', [
+                'plan' => $request->plan,
+                'cost' => $request->cost,
+                'user_id' => $request->user_id,
+            ])->with('message', $response["ResponseDescription"] . " Check your phone for a prompt to complete the payment. Enter the M-Pesa PIN and complete payment");
+        } else {
+            // Handle error case if needed
+            return redirect()->back()->withErrors([
+                'payment' => 'An error occurred while processing your payment.',
+            ]);
+        }
+    }
+
+
+
 
 }
