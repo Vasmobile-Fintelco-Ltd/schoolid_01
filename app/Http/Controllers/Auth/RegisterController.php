@@ -139,9 +139,11 @@ class RegisterController extends Controller
     }
 
     public function setPin(Request $request) {    
-      
+   
         //dd(session()->all());
         // Assuming user data is stored in the session after OTP verification
+        $hashedPassword = bcrypt($request->pin);   
+      
         $user = User::create([
             'name' => Session::get('name'),
             'last' => Session::get('last'),
@@ -150,7 +152,7 @@ class RegisterController extends Controller
             // 'school_name' => Session::get('role') === 'Student' ? Session::get('school_name') : null,
             // 'grade' => Session::get('role') === 'tudent' ? Session::get('grade') : null,
             'role' => Session::get('role'),
-            'password' => Hash::make($request->pin),
+            'password' => $hashedPassword,
         ]);
 
 
@@ -169,7 +171,7 @@ class RegisterController extends Controller
             $student->education_system_id = Session::get('level');
             $student->education_level_id = Session::get('grade');
             $student->brain_game_status = 0;
-            $student->guardian_id = 0;
+            $student->guardian_id = '9cce5a24-8cbe-4908-9e16-9404c171132c';
             $student->Date_of_birth = 0;
             $student->save();
         }
