@@ -63,6 +63,9 @@ Route::post('/user_login', [LoginController::class, 'userLogin'])->name('user_lo
 Route::get('payment_plan', [LoginController::class, 'showPaymentForm'])->name('payment.user');
 Route::post('submit_plan', [LoginController::class, 'userSubscribe'])->name('submit_plan');
 
+Route::get('proceed', [LoginController::class, 'proceed'])->name('proceed');
+Route::post('mpesa_confirm', [LoginController::class, 'mpesaConfirm'])->name('mpesa_confirm');
+
 
 
 
