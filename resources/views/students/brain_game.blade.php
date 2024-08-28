@@ -466,7 +466,7 @@
                         </div>
                        
                     </footer>
-                    <div class="timer">
+                    <div class="timer" style="margin:20px">
                         <div class="time_left_txt">Time Left</div>
                         <div class="timer_sec">15</div>
                     </div>
