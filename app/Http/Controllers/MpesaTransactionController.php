@@ -31,6 +31,7 @@ class MpesaTransactionController extends Controller
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $curl_response = curl_exec($curl);
         $access_token=json_decode($curl_response);
+        dd($access_token);
         return $access_token->access_token;
     }
 
@@ -77,7 +78,7 @@ class MpesaTransactionController extends Controller
             'PartyA' => $formattedPhoneNumber, // replace this with your phone number
             'PartyB' => 888365,
             'PhoneNumber' => $formattedPhoneNumber, // replace this with your phone number
-            'CallBackURL' => 'http://examind.skoolid.africa/api/v1/quiz/transaction/confirmation/',
+            'CallBackURL' => 'https://examind.skoolid.africa/api/v1/quiz/transaction/confirmation/',
             'AccountReference' => $user.' '.$plan,
             'TransactionDesc' => "Centy Plus $plan Payment"
         ];
@@ -373,8 +374,8 @@ class MpesaTransactionController extends Controller
         curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode(array(
             'ShortCode' => "888365",
             'ResponseType' => 'Completed',
-            'ConfirmationURL' => "http://examind.skoolid.africa/api/v1/hlab/transaction/confirmation",
-            'ValidationURL' => "http://examind.skoolid.africa/api/v1/hlab/validation"
+            'ConfirmationURL' => "https://examind.skoolid.africa/api/v1/hlab/transaction/confirmation",
+            'ValidationURL' => "https://examind.skoolid.africa/api/v1/hlab/validation"
         )));
         $curl_response = curl_exec($curl);
         echo $curl_response;
