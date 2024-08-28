@@ -17,9 +17,6 @@ body {
 .bg-light {
     background-color: #ffffff00 !important;
 }
-.navbar.scrolled {
-    background-color: green;
-  }
 .navbar-light .navbar-nav .nav-link {
     color: rgb(255 255 255);
     font-weight: 500;
@@ -80,7 +77,7 @@ body {
 .hero_banner {
     background-size: cover;
     background-image: url(../images/backgrounds/bg1.jpg);
-    /* background: rgb(22,29,158); */
+    
     padding: 160px 0 140px;
     background-position: center center;
     background-repeat: no-repeat;
@@ -320,13 +317,13 @@ body {
     .inner-content-form .form-group label{
         margin-bottom: 0px;
     }
-    .btn-primary{
-        background: rgb(22, 29, 158);
-        border-color: rgb(22, 29, 158);
+    .btn-primary {
+        background: rgb(22 69 158);
+        border-color: rgb(22 69 158);
         margin-top: 30px;
         font-size: .875rem;
         line-height: 1.25rem;
-        padding:10px 40px;
+        padding: 14px 40px;
     }
     select {
         word-wrap: normal;
@@ -368,6 +365,7 @@ body {
         padding: 10px 40px;
         width: 100%;
         color: #fff;
+        margin-bottom: 20px;
     }
     .inner-login .btn-verify {
         background: #2244bf;
@@ -505,6 +503,13 @@ body {
         background-position: center center;
         background-color: #16459e;
     }
+    .work-details{
+        background-image: url(../images/backgrounds/bg2.jpg);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-position: center center; 
+    }
     .work_banner h1{
         font-size: 50px;
         font-weight: 889;
@@ -525,7 +530,7 @@ body {
     }
     .img-work {
         width: 40%;
-        padding: 0px 10px;
+        padding: 0px 0px;
     }
     .work-wrapper img{
         width:100%;
@@ -631,7 +636,7 @@ body {
         font-size: 14px;
         text-transform: uppercase;
         color: #fff;
-        margin-bottom: 0px;
+        margin-bottom: 20px;
         background-color: #ecc802;
     }
     .brain-container h1{
@@ -652,11 +657,11 @@ body {
     }
     .quizzess-section {
         position: relative;
-        padding-top: 70px;
+        padding-top: 0px;
         padding-bottom: 50px;
     }
     .quiz-content h2 {
-        font-size: 40px;
+        font-size: 30px;
         font-weight: 889;
         line-height: 66px;
         margin-bottom: 15px;
@@ -734,9 +739,10 @@ body {
     .exam-img img{
         width:100%;
     }
-    .exam-content{
-        width:50%;
-        padding-top:40px;
+    .exam-content {
+        width: 50%;
+        /* padding-top: 40px; */
+        padding: 20px 30px;
     }
     .exam-content h2{
         font-size: 50px;
@@ -950,7 +956,7 @@ Contact Area CSS
 Edu Footer Area CSS
 =================================================*/
 .edu-footer-area{
-    background:#16459e;
+    background:#16449b;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -1139,7 +1145,7 @@ Edu Footer Area CSS
     text-align: center;
     padding-top: 30px;
     padding-bottom: 30px;
-    background-color: #16459e;
+    background-color:#16449b;
     border-top: 1px solid #fff;
     color: #fff;
 }
@@ -1160,11 +1166,11 @@ Edu Footer Area CSS
 
     .price-page-section{
     position:relative;
-    padding:120px 0px 80px;
+    padding:120px 10px 80px;
     }
 
     .price-page-section .auto-container{
-    max-width:1320px;
+    max-width:100%;
     }
 
     .price-block{
@@ -1176,7 +1182,7 @@ Edu Footer Area CSS
     position:relative;
     text-align:center;
     padding:45px 30px 50px;
-    box-shadow:0px 10px 20px rgba(0,0,0,0.05);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
     }
 
     .price-block .inner-box .title{
@@ -1228,21 +1234,31 @@ Edu Footer Area CSS
     .pricing-header{
         text-align: center;
     }
+    .pricing-header h1 {
+        font-size: 50px;
+        line-height: 66px;
+        margin-bottom: 0px;
+        font-family: "Anek Devanagari", sans-serif;
+        color: #000000;
+        font-weight: 600;
+        margin-top: 0px;
+    }
     .pricing-header h2{
         font-size: 50px;
-        font-weight: 889;
+        font-weight: 700;
         line-height: 66px;
         margin-bottom: 15px;
         font-family: "Anek Devanagari", sans-serif;
         color: #000000;
-        font-weight: 600;
         margin-top: 0px;
     }
     .pricing-header p{
         position: relative;
         line-height: 1.7em;
         font-size: 17px;
-        color: #777777;
+        color: #000000;
+        font-weight: 400;
+        margin-bottom:30px;
     }
 
 
@@ -1293,12 +1309,173 @@ Edu Footer Area CSS
     .price-block:nth-child(4) .inner-box .button-box .purchase-btn{
     background-color:#aafffa;
     }
+    .navbar-light .navbar-toggler-icon {
+        background-image: url(../images/backgrounds/menu.png);
+    }
+    .signup-wrapper2 {
+        width: 100%;
+        margin-top: -50px;
+        height: 100hv;
+        background-color: #ffffff;
+        padding: 90px 90px;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    .pricing-header2 {
+        font-size: 50px;
+        font-weight: 889;
+        line-height: 66px;
+        margin-bottom: 35px;
+        font-family: "Anek Devanagari", sans-serif;
+        color: #000000;
+        font-weight: 600;
+        margin-top: 50px;
+        text-align: center;
+    }
+    .pricing-header2 p {
+        position: relative;
+        line-height: 1.7em;
+        font-size: 17px;
+        color: #000000;
+        font-weight: 400;
+    }
 
-
-
+    .inputfield{
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+    .inputfield .input {
+        height: 2em;
+        width: 2em;
+        border: 2px solid #dad9df;
+        outline: none;
+        text-align: center;
+        font-size: 1.5em;
+        border-radius: 0.3em;
+        background-color: #ffffff;
+        outline: none;
+        /*Hide number field arrows*/
+        -moz-appearance: textfield;
+      }
+      .show {
+        display: block;
+      }
+      .hide {
+        display: none;
+      }
+      .input:disabled {
+        color: #89888b;
+      }
+      .input:focus {
+        border: 3px solid #ffb800;
+      }
+      .inner-content-form h3{
+        font-size: 30px;
+        line-height: 66px;
+        margin-bottom: 5px;
+        font-family: "Anek Devanagari", sans-serif;
+        color: #000000;
+        font-weight: 600;
+        margin-top: 20px;
+        text-align: center;
+    }
+    .inner-content-form p {
+        font-size: 16px;
+        /* margin-top: 20px; */
+        text-align: center;
+        line-height: 1.3rem;
+        margin-top: 0px;
+    }
+      
+      
+    
     @media(max-width:768px){
         .hero-container {
             width: 90%;
+        }
+        .inner-content-form h2 {
+            color: #000;
+            font-weight: 600;
+            letter-spacing: 0px;
+            font-size: 26px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .signup-wrapper2 {
+            width: 100%;
+            margin-top: -50px;
+            height: 100hv;
+            background-color: #ffffff;
+            padding: 90px 0px;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .pricing-header2 h1 {
+            font-size: 26px;
+            font-weight: 600;
+            line-height: 26px;
+            margin-bottom: 0px;
+            font-family: "Anek Devanagari", sans-serif;
+            color: #000000;
+            font-weight: 600;
+            margin-top: 0px;
+            text-align: center;
+        }
+        .pricing-header2 p {
+            position: relative;
+            line-height: 1.3em;
+            font-size: 17px;
+            color: #000000;
+            text-align: center;
+            padding: 20px 20px;
+            font-weight: 400;
+        }
+        /* .pricing-header2 p {
+            position: relative;
+            line-height: 1.3em;
+            font-size: 17px;
+            color: #000000;
+            text-align: center;
+            padding: 0px 20px;
+            font-weight: 400;
+        } */
+        .price-page-section {
+            position: relative;
+            padding: 60px 10px 20px;
+        }
+        .hero_banner {
+            background-size: cover;
+            /* background-image: url(../images/backgrounds/bg1.jpg); */
+            background: #16459e;
+            /* padding: 160px 0 140px; */
+            padding-top:160px;
+            padding-bottom:10px;
+            background-position: center center;
+            background-repeat: no-repeat;
+            height: 100vh;
+        }
+        .navbar-expand-lg .navbar-collapse {
+            margin-left: 0px;
+            background: #cfaf05;
+            margin-top:20px;
+        }
+        .form-inline {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-flow: row wrap;
+            flex-flow: row wrap;
+            -ms-flex-align: center;
+            align-items: center;
+            background: #cfaf05;
+            margin-top: -20px;
+            padding: 20px 10px;
+        }
+        .navbar-light .navbar-toggler {
+            color: rgb(0 0 0 / 0%);
+            border-color: rgb(0 0 0 / 0%);
         }
         .nav-tabs .nav-link {
             margin-bottom: 9px;
@@ -1316,7 +1493,7 @@ Edu Footer Area CSS
             margin-bottom: 30px;
         }
         .hero_banner h1 {
-            font-size: 30px;
+            font-size: 34px;
             font-weight: 889;
             line-height: 36px;
             margin-bottom: 15px;
@@ -1324,6 +1501,12 @@ Edu Footer Area CSS
             color: #fff;
             font-weight: 800;
             margin-top: 0px;
+        }
+        .hero_banner p {
+            font-size: 15px;
+            margin-bottom: 34px;
+            font-family: "Anek Devanagari", sans-serif;
+            padding: 0px 20px;
         }
         .hero_banner .search-field {
             padding: 10px 15px;
@@ -1372,20 +1555,38 @@ Edu Footer Area CSS
         }
         .inner-content-form {
             width: 100%;
-            padding: 50px 25px;
+            padding: 40px 10px;
+            box-shadow: none;
         }
         .inner-wrapper2 {
             display: flex;
             flex-direction: row;
-            padding: 40px 5px;
+            padding: 30px 5px;
             box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
             background-color: #fff;
             margin-top: 40px;
         }
+        .inner-content-form p {
+            font-size: 13px;
+            /* margin-top: 20px; */
+            text-align: center;
+            line-height: 1.3rem;
+            margin-top: 0px;
+        }
+        .inner-content-form h3 {
+            font-size: 30px;
+            line-height: 66px;
+            margin-bottom: 5px;
+            font-family: "Anek Devanagari", sans-serif;
+            color: #000000;
+            font-weight: 600;
+            margin-top: 0px;
+            text-align: center;
+        }
         .otp-input-fields {
             margin: auto;
             background-color: rgba(255, 255, 255, 0);
-            max-width: 900px;
+            max-width: 100%;
             width: auto;
             display: flex;
             justify-content: center;
@@ -1411,10 +1612,10 @@ Edu Footer Area CSS
             padding-left: 0;
             margin-bottom: 0;
             list-style: none;
-            background: #2d31a1;
+            background: #cfaf05;
             margin-top: 20px;
-            padding: 10px 0px;
-            box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+            padding: 20px 0px;
+            height: 260px;
         }
         .group1 {
             width: 100% !important;
@@ -1457,7 +1658,7 @@ Edu Footer Area CSS
         .personalized-header h2 {
             font-size: 40px;
             font-weight: 889;
-            line-height: 66px;
+            line-height: 46px;
             margin-bottom: 15px;
             font-family: "Anek Devanagari", sans-serif;
             color: #ffffff;
@@ -1507,7 +1708,7 @@ Edu Footer Area CSS
         .work-content h2 {
             font-size: 40px;
             font-weight: 889;
-            line-height: 66px;
+            line-height: 43px;
             margin-bottom: 15px;
             font-family: "Anek Devanagari", sans-serif;
             color: #000000;
@@ -1534,11 +1735,11 @@ Edu Footer Area CSS
         }
         .exam-content {
             width: 100%;
-            padding-top: 40px;
+            padding:40px 0px;
         }
         .exam-content h2 {
-            font-size: 40px;
-            line-height: 46px;
+            font-size: 33px;
+            line-height: 34px;
             margin-bottom: 15px;
             font-family: "Anek Devanagari", sans-serif;
             font-weight: 600;
@@ -1569,7 +1770,7 @@ Edu Footer Area CSS
             margin-bottom: 20px;
         }
         .exam-work-header h2 {
-            font-size: 40px;
+            font-size: 36px;
             line-height: 46px;
             margin-bottom: 15px;
             font-family: "Anek Devanagari", sans-serif;
@@ -1581,6 +1782,24 @@ Edu Footer Area CSS
         .ptb-100 {
             padding: 50px 0px;
         }
+        .pricing-header h1{
+        font-size: 26px;
+        font-weight: 600;
+        line-height: 46px;
+        margin-bottom: 0px;
+        font-family: "Anek Devanagari", sans-serif;
+        color: #000000;
+        font-weight: 600;
+        margin-top: 0px;
+    }
+    .exam-work-content2 h2 {
+        font-size: 24px;
+        line-height: 36px;
+        margin-bottom: 15px;
+        font-family: "Anek Devanagari", sans-serif;
+        font-weight: 600;
+        margin-top: 0px;
+    }
     }
     .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
         width: auto;
