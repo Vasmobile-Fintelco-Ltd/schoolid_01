@@ -186,8 +186,8 @@ return [
     ])->toArray(),
 
     'mpesa' => [
-        "consumer_key" => env('MPESA_CONSUMER_KEY', 'kherIDoJ1N8eHMdqnAhpfZ8HIU0NcmfO'),
-        "consumer_secret" => env('MPESA_CONSUMER_KEY', 'bOtjBSgX943NrScy'),
+        "consumer_key" => env('MPESA_CONSUMER_KEY', 'qMP3CG2U3Av302beVUIel4LH9LlAYaHt'),
+        "consumer_secret" => env('MPESA_CONSUMER_KEY', '4Hg78xJOOq5D75nG'),
     ],
 
     'sms' => [
