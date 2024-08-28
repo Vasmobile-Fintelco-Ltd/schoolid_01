@@ -37,8 +37,8 @@ class MpesaTransactionController extends Controller
     public function lipaNaMpesaPassword()
     {
         $lipa_time = Carbon::rawParse('now')->format('YmdHms');
-        $passkey = "bd2a11f17f6de08072faf4003988267f28cd84d9b45efa413d35b1a68352a1da";
-        $BusinessShortCode = 4113243;
+        $passkey = "80fa2705b0d47e656804f9ddb6c77e5d31d821b70bc2a967a0daf1a1e62e47d0";
+        $BusinessShortCode = 888365;
         $timestamp =$lipa_time;
         $lipa_na_mpesa_password = base64_encode($BusinessShortCode.$passkey.$timestamp);
         return $lipa_na_mpesa_password;
@@ -69,15 +69,15 @@ class MpesaTransactionController extends Controller
 
         $curl_post_data = [
             //Fill in the request parameters with valid values
-            'BusinessShortCode' => 4113243,
+            'BusinessShortCode' => 888365,
             'Password' => $this->lipaNaMpesaPassword(),
             'Timestamp' => Carbon::rawParse('now')->format('YmdHms'),
             'TransactionType' => 'CustomerPayBillOnline',
             'Amount' => $formattedAmount,
             'PartyA' => $formattedPhoneNumber, // replace this with your phone number
-            'PartyB' => 4113243,
+            'PartyB' => 888365,
             'PhoneNumber' => $formattedPhoneNumber, // replace this with your phone number
-            'CallBackURL' => 'https://examind.skoolid.africa/api/v1/quiz/transaction/confirmation/',
+            'CallBackURL' => 'http://examind.skoolid.africa/api/v1/quiz/transaction/confirmation/',
             'AccountReference' => $user.' '.$plan,
             'TransactionDesc' => "Centy Plus $plan Payment"
         ];
@@ -252,7 +252,7 @@ class MpesaTransactionController extends Controller
             "SecurityCredential" => "***********",
             "Occassion" => "StallOwner",
             "CommandID" => "BusinessPayment",
-            "PartyA" => 4113243,
+            "PartyA" => 888365,
             "PartyB" => $formattedPhoneNumber,
             "Remarks" => "Test B2C",
             "Amount" => 100,
@@ -371,10 +371,10 @@ class MpesaTransactionController extends Controller
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode(array(
-            'ShortCode' => "4113243",
+            'ShortCode' => "888365",
             'ResponseType' => 'Completed',
-            'ConfirmationURL' => "https://examind.skoolid.africa/api/v1/hlab/transaction/confirmation",
-            'ValidationURL' => "https://examind.skoolid.africa/api/v1/hlab/validation"
+            'ConfirmationURL' => "http://examind.skoolid.africa/api/v1/hlab/transaction/confirmation",
+            'ValidationURL' => "http://examind.skoolid.africa/api/v1/hlab/validation"
         )));
         $curl_response = curl_exec($curl);
         echo $curl_response;
