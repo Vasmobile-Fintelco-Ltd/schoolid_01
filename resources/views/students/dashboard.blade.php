@@ -19,6 +19,7 @@ data-responsive-width="992px">
            <div class="row card-group-row" style="margin-top: 3rem !important;">
 
                <div class="col-md-6 col-lg-4 card-group-row__col">
+                
 
                    <div class="card card--elevated posts-card-popular overlay card-group-row__card">
                        

@@ -293,19 +293,6 @@
                       <div class="form-group">
                         <input type="email" name="email" class="form-control" id="exampleInputEmail" placeholder="Enter Email">
                       </div>
-
-                      
-                      <div class="mb-3">
-                        <label for="email" class="form-label">Email address</label>
-                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Enter Your Email Address">
-                        @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-
-
                       <div class="form-group">
                         <input type="number" name="phone_number" class="form-control" id="exampleInputPhone" placeholder="Enter Phone Number">
                     </div>

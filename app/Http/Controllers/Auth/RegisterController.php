@@ -86,6 +86,7 @@ class RegisterController extends Controller
     }
 
     public function register(Request $request) {
+
         
         // Create the user and save OTP in session or DB
         $otp = rand(1000, 9999);
@@ -138,8 +139,15 @@ class RegisterController extends Controller
 
     public function setPin(Request $request) {    
    
-        //dd(session()->all());
-        // Assuming user data is stored in the session after OTP verification
+        
+        if (User::where('email', Session::get('email'))->exists()) {
+            return redirect()->back()->with('message', "The email already exists in our system. Please try with a different email.");
+           // return redirect()->back()->withErrors(['email' => 'The email already exists in our system. Please try with a different email.']);
+        }
+
+        
+ 
+    
         
         $hashedPassword = bcrypt($request->pin);   
       

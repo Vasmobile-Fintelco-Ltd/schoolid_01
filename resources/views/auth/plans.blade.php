@@ -26,7 +26,7 @@
                     <!-- Price Block -->
                     <div class="price-block col-lg-4 col-md-6 col-sm-12">
                         <div class="inner-box">
-                            <div class="title">Weekly</div>
+                            <div class="title">Daily</div>
                             <div class="price"><sup>Kes</sup>40/Day</div>
                             <div class="date">Daily rate</div>
                             <ul class="price-options">
