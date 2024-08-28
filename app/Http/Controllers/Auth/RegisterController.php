@@ -171,7 +171,7 @@ class RegisterController extends Controller
             $student->education_system_id = Session::get('level');
             $student->education_level_id = Session::get('grade');
             $student->brain_game_status = 0;
-            $student->guardian_id = '9cce5a24-8cbe-4908-9e16-9404c171132c';
+            $student->guardian_id = '9cc7a110-3a64-4300-a4bf-9ebaa2365fb4';
             $student->Date_of_birth = 0;
             $student->save();
         }

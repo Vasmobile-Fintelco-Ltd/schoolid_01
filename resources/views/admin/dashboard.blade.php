@@ -235,19 +235,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            @foreach($topStudensts as $topStudenst)
-                                <tr>
-                                    <td>
-                                        <span class="badge badge-success-lighten float-end">Won lead</span>
-                                        <h5 class="mt-0 mb-1">{{ $topStudenst->student->user->name }}</h5>
-                                        <span class="text-muted font-13">{{ $topStudenst->student->educationLevel->name}}, {{$topStudenst->student->school_name}}</span>
-                                    </td>
-                                    <td>{{ $topStudenst->yes_ans}}</td>
-                                    <td class="table-action">
-                                        <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                                    </td>
-                                </tr>
-                                @endforeach
+                           
                             </tbody>
                         </table>
                     </div> <!-- end table-responsive-->
