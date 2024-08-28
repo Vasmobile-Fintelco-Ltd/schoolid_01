@@ -321,26 +321,7 @@ data-responsive-width="992px">
        
    </div>
 
-   <!-- // END Page Content -->
-<!-- Coming Soon Modal -->
-<div class="modal fade" id="comingSoonModal"  role="dialog" aria-labelledby="comingSoonModalLabel" -hidden="true"aria data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="comingSoonModalLabel">Coming Soon</h5>
-            </div>
-            <div class="modal-body position-relative">
-                <div class=" position-absolute w-100 h-100" style="background: rgba(0, 0, 0, 0.5); top: 0; left: 0;"></div>
-                <p class="text-light">We're working on this feature, and it will be available soon. Stay tuned!</p>
-                <img src="{{ asset('back/public/images/coming-soon.png') }}" alt="Coming Soon" class="img-fluid">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" disabled>Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-   <!-- Footer -->
+  
 
    <div class="bg-white border-top-2 mt-auto " style="margin: 8rem">
        <div class="container page__container page-section d-flex flex-column">
