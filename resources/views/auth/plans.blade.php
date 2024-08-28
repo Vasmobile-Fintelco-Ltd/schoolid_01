@@ -36,7 +36,7 @@
                                 <form action="{{ route('subscribe_payment') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="plan" value="daily_1">
-                                    <input type="hidden" name="cost" value="1">
+                                    <input type="hidden" name="cost" value="40">
                                     <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                                     <button type="submit" class="purchase-btn theme-btn">Purchase Now</button>
                                 </form>

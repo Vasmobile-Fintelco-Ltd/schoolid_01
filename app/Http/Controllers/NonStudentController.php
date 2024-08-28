@@ -29,6 +29,7 @@ class NonStudentController extends Controller
     {
         $guardian = User::where('id', auth()->user()->id)->first();
         $students = $guardian->students;
+        $brainGameresults= BrainGame::where('student_id',  $guardian->id)->get();
         return view('nonstudents.dashboard', compact('students'));
     }
 
@@ -300,10 +301,10 @@ class NonStudentController extends Controller
         return view('nonstudents.brain_game', compact('formatedQuestions', 'questions', 'user', 'student','subscription_plans'));
     }
 
-    public function submitBrainGame(Request $request){
+    public function submitNonBrainGame(Request $request){
 
         $user = Auth::user();
-        $student = Student::where('user_id', $user->id)->first();
+        $student = Nonstudent::where('user_id', $user->id)->first();
 
         // fetch the users whose email is teacher@admin.com
 //        $teacher_user = User::where('email', 'teacher@admin.com')->first();
@@ -324,11 +325,10 @@ class NonStudentController extends Controller
             'result_json' => json_encode($request->input('result_json')), // Store the answers in JSON format
             'marks_obtained' => $marksObtained, // Store the marks obtained
         ]);
-       
+        dd($brain_result);
         $brain_result->save();
-        Student::where('id', $student->id)->update(['brain_game_status' => '0']);
 
-        return redirect()->route('students.brain_game_results', ['result' => $brain_result->id])->with('success', 'Answers submitted successfully.');
+        return redirect()->route('nonstudents.brain_game_results', ['result' => $brain_result->id])->with('success', 'Answers submitted successfully.');
 
     }
     public function activateBrainGame(Request $request)

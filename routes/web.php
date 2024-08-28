@@ -179,7 +179,7 @@ Route::prefix('nonstudent')->middleware(['auth', 'isNonstudent'])->group(functio
    // Route::get('/questions/{exam}', [NonStudentController::class, 'showQuestions'])->name('show_questions');
    // Route::post('/questions/{exam}', [NonStudentController::class, 'submitAnswers'])->name('questions.submit');
    // Route::get('/view_result/{result}', [NonStudentController::class, 'viewResult'])->name('students.view_results');
-    //Route::post('/brain_game', [NonStudentController::class, 'submitBrainGame'])->name('brain_game.submit');
+    Route::post('/brain_game_non', [NonStudentController::class, 'submitNonBrainGame'])->name('nonbrain_game.submit');
     Route::post('/evaluate-answer', [ChatsGPTController::class, 'evaluateAnswer']);
     //Route::post('/stk-push/brain-game', [NonStudentController::class, 'activateBrainGame'])->name('stk_push.brain_game');
 });

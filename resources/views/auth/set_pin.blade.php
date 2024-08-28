@@ -21,6 +21,7 @@
             <div class="inner-wrapper2 inner-login">
                 <div class="inner-content-form">
                     <h2>Submit Pin👋</h2>
+                    
                     <form method="POST" action="{{ route('submit-pin') }}" style="box-shadow: none; padding:20px 10px;">
                         @csrf
                         <div class="form-group">
