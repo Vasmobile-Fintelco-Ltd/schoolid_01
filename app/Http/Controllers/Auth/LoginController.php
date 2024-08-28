@@ -114,7 +114,7 @@ if (isset($user->role)) {
         $credentials = $request->only('centy_plus_id', 'password');
 
         $user =Auth::get();
-        dd($user);
+      
         if (Auth::attempt($credentials)) {
             // Authentication passed
             
@@ -221,27 +221,16 @@ if (isset($user->role)) {
    
 
         if ($response["ResponseCode"] == "0") {
-            try {
-                // Assuming $user, $plan, and $cost are correctly defined and hold valid values
-                DB::table('user_subscriptions')->update([
-                    'user_id' => $user, // Make sure $user is defined and holds the correct user ID
-                    'plan' => $plan, // Ensure $plan holds the correct plan information
-                    'cost' => $cost, // Ensure $cost holds the correct cost value
-                    'status' => 0, // Assuming 0 represents an initial or inactive status
-                ]);
-        
-                // Optionally return a success response or handle further logic
-            } catch (\Exception $e) {
-                // Handle any errors that occur during the save operation
-                // Log the exception or provide user feedback
-                Log::error('Error saving subscription: ' . $e->getMessage());
-                return response()->json(['error' => 'Failed to save subscription'], 500);
-            }
+            
+        $use = User::find($user);
+        $use->payment_status = 1;
+        $use->save();
+       
         }
 
         if ($response["ResponseCode"] === "0") {
             // If payment request was successful, redirect back to the payment form with a message
-            return redirect()->route('payment.user', [
+            return redirect()->route('proceed', [
                 'plan' => $request->plan,
                 'cost' => $request->cost,
                 'user_id' => $request->user_id,
@@ -253,6 +242,32 @@ if (isset($user->role)) {
             ]);
         }
     }
+
+    public function proceed(Request $request)
+    {  
+      
+        $plan = $request->plan;
+        $cost = $request->cost;
+        $user_id = $request->user_id;
+
+        return view('auth.prroceed', compact('plan', 'cost','user_id'));
+    }
+
+
+    public function mpesaConfirm(Request $request)
+    {
+        $user=  $request->user_id;
+
+        $use = User::find($user);
+
+        $use->mpesa = $request->mpesa;
+        $use->save();
+       
+        return view('auth.login')->with('message', " Login now the payment was successful");
+       
+        
+    }
+
 
 
 
