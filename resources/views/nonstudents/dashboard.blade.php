@@ -19,36 +19,38 @@ data-responsive-width="992px">
            <div class="row card-group-row" style="margin-top: 3rem !important;">
 
                <div class="col-md-6 col-lg-4 card-group-row__col">
-                          
-                   <div class="card card--elevated posts-card-popular overlay card-group-row__card">
-                       
-
-                            <img src="{{ asset('back/public/images/paths/sketch_430x168.png') }}"
-                            alt=""
-                            class="card-img">
-                       <div class="fullbleed "
-                            style="opacity: .5"></div>
-                       <div class="posts-card-popular__content mt-3">
-                           <div class="posts-card-popular__title card-body">
-                               <a class="card-title "
-                                  href="{{ route('nonstudent_brain_game') }}">Brain Game </a>
-                           </div>
-                       </div>
-                   </div>
-           
+                <div class="card card--elevated posts-card-popular overlay card-group-row__card">        
+                <a href="{{ route('nonstudent_brain_game') }}" >
+               
+                        <img src="{{ asset('back/public/images/paths/sketch_430x168.png') }}" 
+                             alt="" 
+                             class="card-img">
+                        <div class="fullbleed" 
+                             style="opacity: .5"></div>
+                        <div class="posts-card-popular__content ">
+                            <div class="posts-card-popular__title card-body">
+                                <span class="card-title">Brain Game</span>
+                            </div>
+                        </div>
+                   
+                </a>
+            </div>
 
                </div>
 
                <div class="col-md-6 col-lg-4 card-group-row__col">
 
                 <div class="card card--elevated posts-card-popular overlay card-group-row__card" >
+                    <a href="#" >
                     <img src="{{ asset('back/public/images/paths/invision_430x168.png') }}" alt="" class="card-img">
                     <div class="fullbleed" style="opacity: .5"></div>
-                    <div class="posts-card-popular__content mt-3">
+                    <div class="posts-card-popular__content mt-">
                         <div class="posts-card-popular__title card-body">
-                            <a class="card-title" href="#">Quizzes</a>
+                            <span class="card-title"> Quizzes </span>
                         </div>
+                    </a>
                     </div>
+                 
                 </div>
 
                </div>
@@ -56,17 +58,20 @@ data-responsive-width="992px">
                <div class="col-md-6 col-lg-4 card-group-row__col  ">
 
                    <div class="card card--elevated posts-card-popular overlay card-group-row__card">
-                       <img src="{{ asset('back/public/images/paths/photoshop_430x168.png') }}"
+                    <a class="card-title"
+                    href="#">
+                    <img src="{{ asset('back/public/images/paths/photoshop_430x168.png') }}"
                             alt=""
                             class="card-img">
                        <div class="fullbleed"
                             style="opacity: .5"></div>
-                       <div class="posts-card-popular__content mt-3">
+                       <div class="posts-card-popular__content ">
                            <div class="posts-card-popular__title card-body">
                                <a class="card-title"
                                   href="#">Exams</a>
                            </div>
                        </div>
+                    </a>
                    </div>
                </div>
            </div>
@@ -107,9 +112,33 @@ data-responsive-width="992px">
 
                     <tbody>
                         
-
+                        @foreach ($brainGameresults as $brainGameresult) 
+                        <tr>                                       
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $brainGameresult->created_at->format('Y:m:d') }}</td>
+                            <td>{{ $brainGameresult->created_at->format('h:i A') }}</td>
+                            <td>{{ $brainGameresult->yes_ans }}</td>
+                            <td> {{ number_format(($brainGameresult->yes_ans  ) / ( ($brainGameresult->yes_ans) + $brainGameresult->no_ans)  * 100 , 2)}} %</td>
+                          
+                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
+           </div>
+       </div>
+
+               <div style="margin-top:13rem">
+                <p class="text-70 brand mb-24pt">
+                    <img class="brand-icon"
+                         src="{{ asset('back/public/images/illustration/student/128/logo-skoolid.png') }}"
+                         width="120"
+                         alt="Examind">
+                </p>
+                <p class="measure-lead-max text-50 small mr-8pt">Examind is a Module designed to help students prepare effectively for their exams. It comes with KCSE
+                    past papers and uses machine learning to analyze how examiners set questions. This helps Examind
+                    predict potential questions that may appear in the national exam, giving students a strategic advantage
+                    in Examination Preparations.</p>
+               </div>
                {{-- <table class="table mb-0 thead-border-top-0 table-nowrap">
                    <thead style="height:40px;background:#e9edf2;">
                        <tr>
@@ -315,27 +344,7 @@ data-responsive-width="992px">
 
   
 
-   <div class="bg-white border-top-2 mt-auto " style="margin: 8rem">
-       <div class="container page__container page-section d-flex flex-column">
-           <p class="text-70 brand mb-24pt">
-               <img class="brand-icon"
-                    src="{{ asset('back/public/images/illustration/student/128/logo-skoolid.png') }}"
-                    width="120"
-                    alt="Examind">
-           </p>
-           <p class="measure-lead-max text-50 small mr-8pt">Examind is a Module designed to help students prepare effectively for their exams. It comes with KCSE
-               past papers and uses machine learning to analyze how examiners set questions. This helps Examind
-               predict potential questions that may appear in the national exam, giving students a strategic advantage
-               in Examination Preparations.</p>
-           {{-- <p class="mb-8pt d-flex">
-               <a href=""
-                  class="text-70 text-underline mr-8pt small">Terms</a>
-               <a href=""
-                  class="text-70 text-underline small">Privacy policy</a>
-           </p>
-           <p class="text-50 small mt-n1 mb-0">Copyright 2024 &copy; All rights reserved.</p> --}}
-       </div>
-   </div>
+
 
    <!-- // END Footer -->
 

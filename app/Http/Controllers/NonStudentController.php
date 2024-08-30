@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\AccountStatus;
 use App\Enums\ExamType;
 use App\Models\BrainGame;
+use App\Models\BrainGameResult;
 use App\Models\Exam;
 use App\Models\Game;
 use App\Models\Nonstudent;
@@ -28,9 +29,11 @@ class NonStudentController extends Controller
     public function index()
     {
         $guardian = User::where('id', auth()->user()->id)->first();
-        $students = $guardian->students;
-        $brainGameresults= BrainGame::where('student_id',  $guardian->id)->get();
-        return view('nonstudents.dashboard', compact('students'));
+      
+        $brainGameresults = BrainGameResult::where('user_id', $guardian->id)->get();
+
+        
+        return view('nonstudents.dashboard', compact('brainGameresults'));
     }
 
     public function getSubjects()
@@ -304,7 +307,7 @@ class NonStudentController extends Controller
     public function submitNonBrainGame(Request $request){
 
         $user = Auth::user();
-        $student = Nonstudent::where('user_id', $user->id)->first();
+        $user_id = User::where('id', $user->id)->first();
 
         // fetch the users whose email is teacher@admin.com
 //        $teacher_user = User::where('email', 'teacher@admin.com')->first();
@@ -317,15 +320,14 @@ class NonStudentController extends Controller
         $totalMarks = $correctQuestionCount + $incorrectQuestionCount;
         $marksObtained = $totalMarks > 0 ? ($correctQuestionCount / $totalMarks) * 100 : 0;
 
-        $brain_result = BrainGame::create([
+        $brain_result = BrainGameResult::create([
             'name' => $user->name ." 's Brain Game on ". date('m-d-Y'),
-            'student_id' => $student->id,
+            'user_id' => $user_id->id,
             'yes_ans' => $correctQuestionCount, // Count the number of correct answers
             'no_ans' => $incorrectQuestionCount, // Count the number of incorrect answers
             'result_json' => json_encode($request->input('result_json')), // Store the answers in JSON format
             'marks_obtained' => $marksObtained, // Store the marks obtained
         ]);
-        dd($brain_result);
         $brain_result->save();
 
         return redirect()->route('nonstudents.brain_game_results', ['result' => $brain_result->id])->with('success', 'Answers submitted successfully.');

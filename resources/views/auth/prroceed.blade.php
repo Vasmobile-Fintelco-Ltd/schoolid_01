@@ -33,7 +33,7 @@
                     <div class="form-group">
                      
                         <input type="text" name="user_id" value="{{ $user_id }}" hidden>
-                        <input type="text" name="mpesa" class="form-control" id="exampleInputName" aria-describedby="name" placeholder="Enter M-pesa Code">
+                        <input type="text" required name="mpesa" class="form-control" id="exampleInputName" aria-describedby="name" placeholder="Enter M-pesa Code">
                     </div>
                     <button type="submit" class="btn btn-primary">Confirm Now</button>
                 

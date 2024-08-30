@@ -79,10 +79,18 @@
                             <ul class="list-group">
                                 @foreach ($education_levels as $education_level)
                                     @if ($education_level->education_system_id === $education_system->id)
-                                        <li class="list-group-item">{{ $education_level->name }}</li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            {{ $education_level->name }}
+                                            <form action="{{ route('education_levels.destroy', $education_level->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                            </form>
+                                        </li>
                                     @endif
                                 @endforeach
                             </ul>
+                            
                         </div>
                     </div>
                 </div>

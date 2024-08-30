@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\AccountStatus;
 use App\Enums\ExamType;
 use App\Models\BrainGame;
+use App\Models\BrainGameResult;
 use App\Models\Exam;
 use App\Models\Game;
 use App\Models\StudentSubscriptionPlan;
@@ -49,7 +50,7 @@ class StudentController extends Controller
         $centy_balance = $student->centy_balance;
         $account_balance = $student->debit;
         $centiisObtained = BrainGame::where('student_id', $student->id)->sum('yes_ans');
-        $brainGameresults= BrainGame::where('student_id', $student->id)->get();
+        $brainGameresults= BrainGameResult::where('user_id', $user->id)->get();
         return view('students.dashboard', compact('centy_balance', 'account_balance', 'centiisObtained', 'questions_count', 'exams_count', 'exams', 'results','brainGameresults'));
 
     }
@@ -327,7 +328,7 @@ class StudentController extends Controller
     public function submitBrainGame(Request $request){
 
         $user = Auth::user();
-        $student = Student::where('user_id', $user->id)->first();
+        $student = User::where('id', $user->id)->first();
 
         // fetch the users whose email is teacher@admin.com
 //        $teacher_user = User::where('email', 'teacher@admin.com')->first();
@@ -340,17 +341,16 @@ class StudentController extends Controller
         $totalMarks = $correctQuestionCount + $incorrectQuestionCount;
         $marksObtained = $totalMarks > 0 ? ($correctQuestionCount / $totalMarks) * 100 : 0;
 
-        $brain_result = BrainGame::create([
+        $brain_result = BrainGameResult::create([
             'name' => $user->name ." 's Brain Game on ". date('m-d-Y'),
-            'student_id' => $student->id,
+            'user_id' => $student->id,
             'yes_ans' => $correctQuestionCount, // Count the number of correct answers
             'no_ans' => $incorrectQuestionCount, // Count the number of incorrect answers
             'result_json' => json_encode($request->input('result_json')), // Store the answers in JSON format
             'marks_obtained' => $marksObtained, // Store the marks obtained
         ]);
-       
         $brain_result->save();
-        Student::where('id', $student->id)->update(['brain_game_status' => '0']);
+        //Student::where('id', $student->id)->update(['brain_game_status' => '0']);
 
         return redirect()->route('students.brain_game_results', ['result' => $brain_result->id])->with('success', 'Answers submitted successfully.');
 

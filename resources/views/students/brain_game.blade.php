@@ -175,7 +175,7 @@
             }
             
             section .que_text{
-                font-size: 25px;
+                font-size: 30px !important;
                 font-weight: 600;
             }
             
@@ -521,7 +521,7 @@
             <div class="icon">
                 <i class="fas fa-crown"></i>
             </div>
-            <div class="complete_text">Congratulations You've completed the Brain Game!</div>
+            <div class="complete_text">Thank you for participating, Try again tomorrow.</div>
             <div class="score_text">
                 <!-- Here I've inserted Score Result from JavaScript -->
             </div>
@@ -579,9 +579,9 @@
 
 
         // if quitQuiz button clicked
-        quit_quiz.onclick = ()=>{
-            window.location.reload(); //reload the current window
-        }
+        quit_quiz.onclick = () => {
+    window.location.href = "{{ route('student.dashboard') }}"; // Redirect to the dashboard route
+};
 
         const next_btn = document.querySelector("footer .next_btn");
         const bottom_ques_counter = document.querySelector("footer .total_que");
@@ -617,7 +617,7 @@
          
 
                 //creating a new span and div tag for question and passing the value using array index
-                let que_tag = '<span>' + test_questions[index].question + '</span>';
+                let que_tag = '<span style="font-size:40px !important">' + test_questions[index].question + '</span>';
                 que_text.innerHTML = que_tag; //adding new span tag inside que_tag
 
                 // Check if the question has an image

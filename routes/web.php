@@ -97,6 +97,7 @@ Route::prefix('/admin')->middleware(['isAdmin'])->group(function(){
     Route::resource('subscriptions', SubscriptionPlanController::class);
 
     Route::get('/view-parent/{id}', [AdminController::class,'parent_details'])->name('view_parent_details');
+    Route::delete('/education-levels/{id}', [EduacationSystemsController::class, 'destroy'])->name('education_levels.destroy');
 });
 
 Route::prefix('parent')->middleware(['isParent'])->group(function(){
@@ -113,6 +114,9 @@ Route::prefix('parent')->middleware(['isParent'])->group(function(){
 
     Route::get('/view-students/{id}', [GuardianController::class,'student_details'])->name('view_student_details');
     Route::get('/profile', [GuardianController::class, 'parent_profile'])->name('parent_profile');
+    Route::post('/brain_game_non', [GuardianController::class, 'submitNonBrainGame'])->name('parentbrain_game.submit');
+    Route::post('/evaluate-answer', [ChatsGPTController::class, 'evaluateAnswer']);
+    Route::get('/brain_game_play', [GuardianController::class, 'noBrainGame'])->name('parentstudent_brain_game');
 
 });
 

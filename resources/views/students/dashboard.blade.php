@@ -23,18 +23,19 @@ data-responsive-width="992px">
 
                    <div class="card card--elevated posts-card-popular overlay card-group-row__card">
                        
-
+                    <a                    href="{{ route('brain_game_play') }}">
                             <img src="{{ asset('back/public/images/paths/sketch_430x168.png') }}"
                             alt=""
                             class="card-img">
                        <div class="fullbleed "
                             style="opacity: .5"></div>
-                       <div class="posts-card-popular__content mt-3">
+                       <div class="posts-card-popular__content ">
                            <div class="posts-card-popular__title card-body">
-                               <a class="card-title "
-                                  href="{{ route('brain_game_play') }}">Brain Game</a>
+                           <span class="card-title"> Brain  Game</span> 
                            </div>
                        </div>
+                    </a>
+
                    </div>
 
                </div>
@@ -119,165 +120,21 @@ data-responsive-width="992px">
 
                     </tbody>
                 </table>
-               {{-- <table class="table mb-0 thead-border-top-0 table-nowrap">
-                   <thead style="height:40px;background:#e9edf2;">
-                       <tr>
-                           <th style="width: 22px;" class="pr-0">
-                               <a href="javascript:void(0)"
-                                  class="sort2">No</a>
-                           </th>
+            </div>
+        </div>
 
-                           <th>
-                               <a href="javascript:void(0)"
-                                  class="sort"
-                                  data-sort="js-lists-values-name">Subject</a>
-                           </th>
-
-                           <th>
-                               <a href="javascript:void(0)"
-                                  class="sort"
-                                  data-sort="js-lists-values-name">Valid Until</a>
-                           </th>
-
-                           <th style="width: 150px;">
-                               <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-company">Reward</a>
-                           </th>
-
-                           <th style="width: 37px;">Target</th>
-                           <th style="width: 48px;">
-                               <a href="javascript:void(0)"
-                                  class="sort"
-                                  data-sort="js-lists-values-phone">Action</a>
-                           </th>
-                           <th style="width: 24px;"></th>
-                       </tr>
-                   </thead>
-
-                   <tbody class="list" id="clients">
-
-                       <tr>
-                           <td class="pr-0">
-                               <div class="custom-control custom-checkbox">
-                                   <div class="d-flex flex-column">
-                                       <small class="js-lists-values-company list-2"><strong>1</strong></small>
-                                   </div>
-                               </div>
-                           </td>
-
-                           <td>
-                               <div class="media flex-nowrap align-items-center"
-                                    style="white-space: nowrap;">
-                                   <div class="avatar avatar-sm mr-8pt">
-                                       <span class="avatar-title rounded bg-warning">En</span>
-                                   </div>
-                                   <div class="media-body">
-                                       <div class="d-flex flex-column">
-                                           <small class="js-lists-values-company"><strong>English</strong></small>
-                                       </div>
-                                   </div>
-                               </div>
-                           </td>
-
-                           <td>
-                               <small class="js-lists-values-phone text-50">2024-04-05</small>
-                           </td>
-
-                           <td>
-                               <small class="js-lists-values-phone text-50">Kes 100.00</small>
-                           </td>
-
-                           <td>
-                               <small class="js-lists-values-phone text-50">88%</small>
-                           </td>
-
-                           <td>
-                               <a href="quizzes.html" class="chip">Take Quiz</a>
-                           </td>
-                       </tr>
-
-                       <tr>
-                           <td class="pr-0">
-                               <div class="custom-control custom-checkbox">
-                                   <div class="d-flex flex-column">
-                                       <small class="js-lists-values-company list-2"><strong>2</strong></small>
-                                   </div>
-                               </div>
-                           </td>
-
-                           <td>
-                               <div class="media flex-nowrap align-items-center"
-                                    style="white-space: nowrap;">
-                                   <div class="avatar avatar-sm mr-8pt">
-                                       <span class="avatar-title rounded bg-primary">MT</span>
-                                   </div>
-                                   <div class="media-body">
-                                       <div class="d-flex flex-column">
-                                           <small class="js-lists-values-company"><strong>Mathematics</strong></small>
-                                       </div>
-                                   </div>
-                               </div>
-                           </td>
-
-                           <td>
-                               <small class="js-lists-values-phone text-50">2024-04-05</small>
-                           </td>
-
-                           <td>
-                               <small class="js-lists-values-phone text-50">Kes 100.00</small>
-                           </td>
-
-                           <td>
-                               <small class="js-lists-values-phone text-50">88%</small>
-                           </td>
-
-                           <td>
-                               <a href="quizzes.html" class="chip">Take Quiz</a>
-                           </td>
-                       </tr>
-
-
-                       <tr>
-                           <td class="pr-0">
-                               <div class="custom-control custom-checkbox">
-                                   <div class="d-flex flex-column">
-                                       <small class="js-lists-values-company list-2"><strong>3</strong></small>
-                                   </div>
-                               </div>
-                           </td>
-
-                           <td>
-                               <div class="media flex-nowrap align-items-center"
-                                    style="white-space: nowrap;">
-                                   <div class="avatar avatar-sm mr-8pt">
-                                       <span class="avatar-title rounded bg-danger">HI</span>
-                                   </div>
-                                   <div class="media-body">
-                                       <div class="d-flex flex-column">
-                                           <small class="js-lists-values-company"><strong>History</strong></small>
-                                       </div>
-                                   </div>
-                               </div>
-                           </td>
-
-                           <td>
-                               <small class="js-lists-values-phone text-50">2024-04-05</small>
-                           </td>
-
-                           <td>
-                               <small class="js-lists-values-phone text-50">Kes 290.00</small>
-                           </td>
-
-                           <td>
-                               <small class="js-lists-values-phone text-50">50%</small>
-                           </td>
-
-                           <td>
-                               <a href="quizzes.html" class="chip">Take Quiz</a>
-                           </td>
-                       </tr>
-
-                   </tbody>
-               </table> --}}
+        <div style="margin-top:13rem">
+            <p class="text-70 brand mb-24pt">
+                <img class="brand-icon"
+                    src="{{ asset('back/public/images/illustration/student/128/logo-skoolid.png') }}" width="120"
+                    alt="Examind">
+            </p>
+            <p class="measure-lead-max text-50 small mr-8pt">Examind is a Module designed to help students prepare
+                effectively for their exams. It comes with KCSE
+                past papers and uses machine learning to analyze how examiners set questions. This helps Examind
+                predict potential questions that may appear in the national exam, giving students a strategic advantage
+                in Examination Preparations.</p>
+        </div>
            </div>
 
            {{-- <div class="card-footer p-8pt">
@@ -324,28 +181,7 @@ data-responsive-width="992px">
 
   
 
-   <div class="bg-white border-top-2 mt-auto " style="margin: 8rem">
-       <div class="container page__container page-section d-flex flex-column">
-           <p class="text-70 brand mb-24pt">
-               <img class="brand-icon"
-                    src="{{ asset('back/public/images/illustration/student/128/logo-skoolid.png') }}"
-                    width="120"
-                    alt="Examind">
-           </p>
-           <p class="measure-lead-max text-50 small mr-8pt">Examind is a Module designed to help students prepare effectively for their exams. It comes with KCSE
-               past papers and uses machine learning to analyze how examiners set questions. This helps Examind
-               predict potential questions that may appear in the national exam, giving students a strategic advantage
-               in Examination Preparations.</p>
-           {{-- <p class="mb-8pt d-flex">
-               <a href=""
-                  class="text-70 text-underline mr-8pt small">Terms</a>
-               <a href=""
-                  class="text-70 text-underline small">Privacy policy</a>
-           </p>
-           <p class="text-50 small mt-n1 mb-0">Copyright 2024 &copy; All rights reserved.</p> --}}
-       </div>
-   </div>
-
+ 
    <!-- // END Footer -->
 
 </div>
