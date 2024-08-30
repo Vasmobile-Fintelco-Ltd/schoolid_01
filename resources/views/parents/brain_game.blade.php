@@ -1,4 +1,4 @@
-@extends('nonstudents.master')
+@extends('parents.master')
 
 @section('styles')
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"
@@ -700,7 +700,7 @@
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
             // Call your server-side endpoint to evaluate the answer using ChatGPT
-            const response = await fetch('/nonstudent/evaluate-answer', {
+            const response = await fetch('/parent/evaluate-answer', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -782,7 +782,7 @@
             };
 
             // Make an AJAX request to the Laravel endpoint
-            fetch('{{ route('nonbrain_game.submit') }}', {
+            fetch('{{ route('parentbrain_game.submit') }}', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

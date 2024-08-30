@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Hash;
 use Datatables;
 use App\Jobs\SendStudentAccountEmail;
 use App\Jobs\SendStudentAccountSms;
+use App\Models\BrainGameResult;
+use App\Models\Game;
+use Illuminate\Support\Facades\Log;
+
 class GuardianController extends Controller
 {
 
@@ -22,7 +26,8 @@ class GuardianController extends Controller
     {
         $guardian = Guardian::where('user_id', auth()->user()->id)->first();
         $students = $guardian->students;
-        return view('parents.dashboard', compact('students'));
+        $brainGameresults = BrainGameResult::where('user_id', $guardian->id)->get();
+        return view('parents.dashboard', compact('students','brainGameresults'));
     }
 
     /**
@@ -174,5 +179,85 @@ class GuardianController extends Controller
         $guardian = Guardian::where('user_id', $auth_user->id)->first();
 
         return view('parents.profile', compact( 'guardian'));
+    }
+    public function noBrainGame(Request $request)
+    {
+        $user = Auth::user();
+        $student = Guardian::where('user_id', $user->id)->first();
+        if (!$student) {
+            // Handle the case where the student record does not exist
+            return redirect()->back()->with('error', 'Student record not found.');
+        }
+
+        // Check if a result exists for the given student and exam
+        //$result = BrainGame::where('student_id', $student->id)->first();
+
+     
+
+
+
+        $subscription_plans =SubscriptionPlan::where('name', 'brain_game')->get();
+  
+
+
+        // Retrieve questions
+        $questions = Game::take(20) // Change the number to the desired amount of questions
+        ->get();
+
+        Log::info('random questions'. $questions);
+        $formatedQuestions = [];
+
+        foreach ($questions as $key => $question) {
+            $question = [
+                'numb' => $key + 1,
+                'question' => $question['question'],
+                'answer' => $question['answer'],
+                'question_type' => $question['question_type'],
+                'year' => $question['year'],
+                'curriculum' => $question['curriculum'],
+                'options' => [
+                    $question['option1'],
+                    $question['option2'],
+                    $question['option3'],
+                    $question['option4']
+                ]
+            ];
+
+            $formatedQuestions[] = $question;
+        }
+
+        Log::info($formatedQuestions);
+
+        return view('parents.brain_game', compact('formatedQuestions', 'questions', 'user', 'student','subscription_plans'));
+    }
+
+    public function submitNonBrainGame(Request $request){
+
+        $user = Auth::user();
+        $user_id = User::where('id', $user->id)->first();
+
+        // fetch the users whose email is teacher@admin.com
+//        $teacher_user = User::where('email', 'teacher@admin.com')->first();
+//        $admin_teacher = Teacher::where('user_id', $teacher_user->id)->first();
+
+        $correctQuestionCount = intval($request->input('yes_ans')) ;
+        $incorrectQuestionCount = intval($request->input('no_ans'));
+
+        // Accumulate the total marks
+        $totalMarks = $correctQuestionCount + $incorrectQuestionCount;
+        $marksObtained = $totalMarks > 0 ? ($correctQuestionCount / $totalMarks) * 100 : 0;
+
+        $brain_result = BrainGameResult::create([
+            'name' => $user->name ." 's Brain Game on ". date('m-d-Y'),
+            'user_id' => $user_id->id,
+            'yes_ans' => $correctQuestionCount, // Count the number of correct answers
+            'no_ans' => $incorrectQuestionCount, // Count the number of incorrect answers
+            'result_json' => json_encode($request->input('result_json')), // Store the answers in JSON format
+            'marks_obtained' => $marksObtained, // Store the marks obtained
+        ]);
+        $brain_result->save();
+
+        return redirect()->route('parent.brain_game_results', ['result' => $brain_result->id])->with('success', 'Answers submitted successfully.');
+
     }
 }

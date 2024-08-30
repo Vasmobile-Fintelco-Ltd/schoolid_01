@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
         <meta content="Coderthemes" name="author">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <link rel="stylesheet" href="{{ asset('assets/css/vendor/dataTables.bootstrap5.css') }}" type="text/css">
         <link rel="stylesheet" href="{{ asset('assets/css/vendor/responsive.bootstrap5.css') }}" type="text/css">
@@ -16,6 +17,42 @@
         <link rel="stylesheet" href="{{ asset('assets/css/icons.min.css') }}" type="text/css">
         <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}" type="text/css" id="light-style">
         <link rel="stylesheet" href="{{ asset('assets/css/app-dark.min.css') }}" type="text/css" id="dark-style">
+         {{-- //new ui  --}}
+ <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CRoboto:400,500%7CExo+2:600&display=swap"
+ rel="stylesheet">
+
+<!-- Preloader -->
+<link type="text/css"
+ href="{{ asset('back/public/vendor/spinkit.css') }}"
+ rel="stylesheet">
+
+<!-- Perfect Scrollbar -->
+<link type="text/css"
+ href="{{ asset('back/public/vendor/perfect-scrollbar.css') }}"
+ rel="stylesheet">
+
+<!-- Material Design Icons -->
+<link type="text/css"
+ href="{{ asset('back/public/css/material-icons.css') }}"
+ rel="stylesheet">
+
+<!-- Font Awesome Icons -->
+<link type="text/css"
+ href="{{ asset('back/public/css/fontawesome.css') }}"
+ rel="stylesheet">
+
+<!-- Preloader -->
+<link type="text/css"
+ href="{{ asset('back/public/css/preloader.css') }}"
+ rel="stylesheet">
+
+<!-- App CSS -->
+<link type="text/css"
+ href="{{ asset('back/public/css/app.css') }}"
+ rel="stylesheet">
+ <link type="text/css"
+ href="{{ asset('back/public/css/parent.css') }}"
+ rel="stylesheet">
 
         @yield('styles')
 

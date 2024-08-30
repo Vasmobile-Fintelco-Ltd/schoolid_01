@@ -43,7 +43,7 @@
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item notify-item">
                         <div class="notify-icon">
-                            <img  src="{{ asset('assets/images/users/avatar-2.jpg') }}" class="img-fluid rounded-circle" alt=""> </div>
+                            <img  src="{{ asset('assets/images/users/avatar-2.jpg') }}" class="img-fluid rounded-circle" alt="" ></div>
                         <p class="notify-details">Cristina Pride</p>
                         <p class="text-muted mb-0 user-msg">
                             <small>Hi, How are you? What about our next meeting</small>
@@ -91,16 +91,16 @@
         </li>
 
         <li class="dropdown notification-list">
-            <a class="nav-link dropdown-toggle nav-user arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+            <a class="nav-link dropdown-toggle nav-user arrow-none me-0" style="margin-top: -1rem" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                 <span class="account-user-avatar">
                     <img src="{{ asset('assets/images/users/avatar-1.jpg') }}" alt="user-image" class="rounded-circle">
                 </span>
                 <span>
-                    <span class="account-user-name"> {{ Auth::user()->name }}</span>
+                    <span class="account-user-name" style="font-size:11px"> {{ Auth::user()->name }}</span>
                     <span class="account-position"> {{ Auth::user()->role }}</span>
                 </span>
             </a>
-            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated topbar-dropdown-menu profile-dropdown">
+            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated topbar-dropdown-menu profile-dropdown" style="margin-top: -1.5rem">
                 <!-- item-->
                 <div class=" dropdown-header noti-title">
                     <h6 class="text-overflow m-0">Welcome !</h6>
@@ -119,10 +119,7 @@
                 </a>
 
                 <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                    <i class="mdi mdi-lifebuoy me-1"></i>
-                    <span>Support</span>
-                </a>
+               
 
                 <!-- item-->
                 <a href="javascript:void(0);" class="dropdown-item notify-item">

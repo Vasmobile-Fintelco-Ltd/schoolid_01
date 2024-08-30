@@ -257,19 +257,30 @@
                         <div class="form-group">
                           <input type="text" name="school"  class="form-control" id="exampleInputName" aria-describedby="emailName" placeholder="Enter School Name">
                         </div>
-                      <div class="form-group">
-                          <select class="form-control" id="exampleFormControlSelect1" name="level">
-                            <option value="jrn">Juniour Secondary</option>
-                            <option value="hg">High School</option>
-                          </select>
-                        </div>
-                        <div class="form-group">
-                          <select class="form-control" id="exampleFormControlSelect1" name="grade">
-                            <option value="g6">Grade 6</option>
-                            <option value="g7">Grade 7</option>
-                            <option value="g8">Grade 8</option>
-                          </select>
-                        </div>
+                     
+                        @php
+                        $systems = App\Models\EducationSystem::all();
+                        $levels = App\Models\EducationLevel::all();
+                    @endphp
+                    
+                    <div class="form-group">
+                        <select class="form-control" id="systemSelect" name="system">
+                            <option value="">Select Education Curriculum</option>
+                            @foreach ($systems as $system)
+                                <option value="{{ $system->id }}" required>{{ $system->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <select class="form-control" id="levelSelect" name="level" disabled>
+                            <option value="">Select Education Level</option>
+                            @foreach ($levels as $level)
+                                <option value="{{ $level->id }}" required  data-education-system-id="{{ $level->education_system_id }}">{{ $level->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    
                         <div class="form-check">
                           <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                           <label class="form-check-label" for="defaultCheck1">
@@ -336,6 +347,32 @@
         </div>
     </div>
 </section>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const systemSelect = document.getElementById('systemSelect');
+    const levelSelect = document.getElementById('levelSelect');
+
+    systemSelect.addEventListener('change', function () {
+        const selectedSystemId = this.value;
+
+        // Enable or disable the level select based on the system selection
+        levelSelect.disabled = !selectedSystemId;
+
+        // Show/hide levels based on the selected education system ID
+        Array.from(levelSelect.options).forEach(option => {
+            // Display the placeholder or options matching the selected system ID
+            if (!option.value || option.dataset.educationSystemId === selectedSystemId) {
+                option.style.display = 'block';
+            } else {
+                option.style.display = 'none';
+            }
+        });
+
+        // Reset the level select to the placeholder option
+        levelSelect.value = '';
+    });
+});
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>

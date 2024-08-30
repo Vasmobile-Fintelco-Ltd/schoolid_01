@@ -84,11 +84,14 @@ class EduacationSystemsController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+  
+
+    public function destroy($id)
+{
+    $educationLevel = EducationLevel::findOrFail($id);
+    $educationLevel->delete();
+
+    return redirect()->back()->with('success', 'Education level deleted successfully.');
+}
+
 }
