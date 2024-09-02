@@ -202,10 +202,9 @@ class GuardianController extends Controller
 
         // Retrieve questions
         // Retrieve questions
-        $questions = Game::inRandomOrder() // Randomize the order
-        ->take(20) // Limit to 20 questions
+        $questions = Game::inRandomOrder()
+        ->limit(20)
         ->get();
-
 
         Log::info('random questions'. $questions);
         $formatedQuestions = [];

@@ -288,6 +288,7 @@
                           </label>
                         </div>
                         <button class="btn btn-primary" type="submit"> Sign Up </button>
+                       <a href="{{ route('login')}}" class="btn btn-primary">Sign In</a>
                     </form>
                 </div>
                 <div class="tab-pane" role="tabpanel" id="Parent">
