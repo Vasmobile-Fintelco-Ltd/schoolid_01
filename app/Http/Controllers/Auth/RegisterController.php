@@ -95,7 +95,7 @@ class RegisterController extends Controller
         Session::put('name', $name);
         Session::put('last', $request->last);
         Session::put('phone_number', $request->phone_number);
-        Session::put('grade', $request->grade);
+        Session::put('system', $request->system);
         Session::put('level', $request->level);
         Session::put('role', $request->role);
         Session::put('email', $request->email);
@@ -175,8 +175,8 @@ class RegisterController extends Controller
             $student->user_id = $user->id;
             $student->school_name = Session::get('school');
             $student->active_subscription = 0;
-            $student->education_system_id = Session::get('level');
-            $student->education_level_id = Session::get('grade');
+            $student->education_system_id = Session::get('system');
+            $student->education_level_id = Session::get('level');
             $student->brain_game_status = 0;
             $student->guardian_id = '9cc7a110-3a64-4300-a4bf-9ebaa2365fb4';
             $student->Date_of_birth = 0;
