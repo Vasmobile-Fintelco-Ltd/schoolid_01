@@ -601,7 +601,7 @@
 
 
             //creating a new span and div tag for question and passing the value using array index
-            let que_tag = '<span style="font-size:40px !important">' + test_questions[index].question + '</span>';
+            let que_tag = '<span style="font-size:25px !important">' + test_questions[index].question + '</span>';
             que_text.innerHTML = que_tag; //adding new span tag inside que_tag
 
             // Check if the question has an image
