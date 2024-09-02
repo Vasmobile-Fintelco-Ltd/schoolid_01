@@ -534,22 +534,17 @@
 
         // Variable to store the user's score
         let answers = [];
+        
 
 
         // if startQuiz button clicked
-        start_btn.onclick = () => {
-            quiz_box.classList.add("activeQuiz"); //show info box
-        }
-
-
-        // if continueQuiz button clicked
-        start_btn.onclick = () => {
-            quiz_box.classList.add("activeQuiz"); //show quiz box
-            showQuetions(0); //calling showQestions function
-            queCounter(1); //passing 1 parameter to queCounter
-            startTimer(15); //calling startTimer function
-            startTimerLine(0); //calling startTimerLine function
-        }
+        window.onload = () => {
+        quiz_box.classList.add("activeQuiz"); // Show quiz box
+        showQuetions(0); // Calling showQuestions function
+        queCounter(1); // Passing 1 parameter to queCounter
+        startTimer(15); // Calling startTimer function
+        startTimerLine(0); // Calling startTimerLine function
+    };
 
         let timeValue = 15;
         let que_count = 0;
@@ -564,8 +559,11 @@
 
         // if quitQuiz button clicked
         quit_quiz.onclick = () => {
-            window.location.reload(); //reload the current window
+            window.location.href = "{{ route('nonstudent.dashboard') }}"; // Redirect to the dashboard route
         }
+
+   
+          
 
         const next_btn = document.querySelector("footer .next_btn");
         const bottom_ques_counter = document.querySelector("footer .total_que");
@@ -601,7 +599,7 @@
 
 
             //creating a new span and div tag for question and passing the value using array index
-            let que_tag = '<span>' + test_questions[index].question + '</span>';
+            let que_tag = '<span  style="font-size:40px !important">' + test_questions[index].question + '</span>';
             que_text.innerHTML = que_tag; //adding new span tag inside que_tag
 
             // Check if the question has an image
