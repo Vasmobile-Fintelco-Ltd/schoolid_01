@@ -243,19 +243,19 @@
                     @csrf 
                     <input type="hidden" name="role" value="student">
                       <div class="form-group group1">
-                        <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailName" placeholder="Enter First Name">
+                        <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailName" placeholder="Enter First Name" required>
                       </div>
                       <div class="form-group group2">
-                          <input type="text" name="last" class="form-control" id="exampleInputName" aria-describedby="emailNmae" placeholder="Enter Last Name">
+                          <input type="text" name="last" class="form-control" id="exampleInputName" aria-describedby="emailNmae" placeholder="Enter Last Name" required>
                         </div>
                       <div class="form-group group1">
                         <input type="email" name="email" class="form-control" id="exampleInputEmail" placeholder="Enter Email">
                       </div>
                       <div class="form-group group2">
-                          <input type="number" name="phone_number" class="form-control" id="exampleInputPhone" placeholder="Enter Phone Number">
+                          <input type="number" name="phone_number" class="form-control" id="exampleInputPhone" placeholder="Enter Phone Number" required>
                         </div>
                         <div class="form-group">
-                          <input type="text" name="school"  class="form-control" id="exampleInputName" aria-describedby="emailName" placeholder="Enter School Name">
+                          <input type="text" name="school"  class="form-control" id="exampleInputName" aria-describedby="emailName" placeholder="Enter School Name" required>
                         </div>
                      
                         @php
@@ -264,7 +264,7 @@
                     @endphp
                     
                     <div class="form-group">
-                        <select class="form-control" id="systemSelect" name="system">
+                        <select class="form-control" id="systemSelect" name="system" required>
                             <option value="">Select Education Curriculum</option>
                             @foreach ($systems as $system)
                                 <option value="{{ $system->id }}" required>{{ $system->name }}</option>
@@ -273,7 +273,7 @@
                     </div>
                     
                     <div class="form-group">
-                        <select class="form-control" id="levelSelect" name="level" disabled>
+                        <select class="form-control" id="levelSelect" name="level"  required>
                             <option value="">Select Education Level</option>
                             @foreach ($levels as $level)
                                 <option value="{{ $level->id }}" required  data-education-system-id="{{ $level->education_system_id }}">{{ $level->name }}</option>
