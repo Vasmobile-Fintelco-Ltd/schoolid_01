@@ -455,7 +455,7 @@
 
                     <div class="quiz_box  ques-mobile">
                         <header class="hero__lead "
-                            style="background: #16459e !important; width: 100%; height: 100px;; margin: 0; padding: 0; box-sizing: border-box;">
+                            style="background: #16459e !important; width: 100%; height: 100%; margin: 0; padding: 0; box-sizing: border-box;">
                             <footer>
                                 <div class="total_que text-white" style="font-weight: 700">
                                     <!-- Here I've inserted Question Count Number from JavaScript -->
@@ -469,9 +469,9 @@
                             {{-- <div class="time_line"></div> --}}
                         </header>
                         
-                        <header class="hero__lead text-white-50"    style="background: #16459e !important; width: 100%; height: 100px;; margin: 0; padding: 0; box-sizing: border-box;">
+                        <header class="hero__lead text-white-50"    style="background: #16459e !important; width: 100%; height: 100%; margin: 0; padding: 0; box-sizing: border-box;">
 
-                            <div class="que_text" style="padding: 30px !important">
+                            <div class="que_text" style="padding: 30px !important;font-weight:600">
                                 <!-- Here I've inserted question from JavaScript -->
 
                             </div>
