@@ -395,6 +395,11 @@
             font-weight: bold;
             margin-bottom: 10px;
         }
+        @media only screen and (max-width: 768px) {
+  .ques-mobile{
+    margin-top: 5rem !important;
+  }
+}
     </style>
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CRoboto:400,500%7CExo+2:600&display=swap"
         rel="stylesheet">
@@ -448,7 +453,7 @@
 
 
 
-                    <div class="quiz_box ">
+                    <div class="quiz_box ques-mobile">
                         <header class="hero__lead "
                             style="background: #16459e !important; width: 100%; height: 100px;; margin: 0; padding: 0; box-sizing: border-box;">
                             <footer>
