@@ -542,19 +542,15 @@
 
 
         // if startQuiz button clicked
-        start_btn.onclick = () => {
-            quiz_box.classList.add("activeQuiz"); //show info box
-        }
+        // if startQuiz button clicked
+        window.onload = () => {
+        quiz_box.classList.add("activeQuiz"); // Show quiz box
+        showQuetions(0); // Calling showQuestions function
+        queCounter(1); // Passing 1 parameter to queCounter
+        startTimer(15); // Calling startTimer function
+        startTimerLine(0); // Calling startTimerLine function
+        };
 
-
-        // if continueQuiz button clicked
-        start_btn.onclick = () => {
-            quiz_box.classList.add("activeQuiz"); //show quiz box
-            showQuetions(0); //calling showQestions function
-            queCounter(1); //passing 1 parameter to queCounter
-            startTimer(15); //calling startTimer function
-            startTimerLine(0); //calling startTimerLine function
-        }
 
         let timeValue = 15;
         let que_count = 0;
@@ -567,10 +563,11 @@
         const quit_quiz = result_box.querySelector(".buttons .quit");
 
 
-        // if quitQuiz button clicked
-        quit_quiz.onclick = () => {
-            window.location.reload(); //reload the current window
+         // if quitQuiz button clicked
+         quit_quiz.onclick = () => {
+            window.location.href = "{{ route('parent.dashboard') }}"; // Redirect to the dashboard route
         }
+
 
         const next_btn = document.querySelector("footer .next_btn");
         const bottom_ques_counter = document.querySelector("footer .total_que");
