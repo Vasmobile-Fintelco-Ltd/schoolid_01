@@ -79,13 +79,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 card-group-row__col">
-                            <div class="card card-group-row__card p-relative o-hidden">
-                                <div class="card-body d-flex flex-row align-items-center" style="background-color: #00b5b4; color: #e9edf2;">
+                      
+                        <div class="col-lg-4 col-md-6 ">
+                            <a href="{{ route('parentstudent_brain_game')}}">
+                            <div class="card ">
+                                <div class="card-body  flex-row align-items-center" style="background-color: #00b5b4; color: #e9edf2;">
                                     <div class="flex">
-                                        <a href="{{ route('parentstudent_brain_game')}}"><span class="h2 m-0" style="color:#fff;">Brain Game</span></a>
+                                        <span class="h2 m-0 mt-2" style="color:#fff;">Brain Game</span>
                                     </div>
-                                    <img src="{{ asset('back/public/images/paths/game.png') }}" style="width: 40px;"/>
+                                    <img src="{{ asset('back/public/images/paths/game.png') }}" style="width: 40px;float:right;margin-top:-1rem"/>
                                 </div>
                                 <div class="progress"
                                      style="height: 3px;">
@@ -98,6 +100,7 @@
                                 </div>
                             </div>
                         </div>
+                    </a>
                     </div> 
         </div>
        
