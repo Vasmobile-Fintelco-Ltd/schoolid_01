@@ -81,11 +81,13 @@
                     </p>
                     <form class="search-form">
                         <div class="input-group">
-                            <div class="input-group3">
+                            <div class="input-group3 mx-auto d-block" >
                                 <input type="search" class="search-field" placeholder="Enter Phone Number"
                                     value="">
                                 <a class="rstore-domain-search-button search-submit btn btn-info"
                                     href="{{ route('register') }}">Sign Up</a>
+                                    <a class="rstore-domain-search-button search-submit btn btn-primary"
+                                    href="{{ route('login') }}">Sign In</a>
                             </div>
                         </div>
                     </form>

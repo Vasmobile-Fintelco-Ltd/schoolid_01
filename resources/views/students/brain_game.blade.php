@@ -395,6 +395,12 @@
       margin-bottom: 10px;
   }
 
+  @media only screen and (max-width: 768px) {
+  .ques-mobile{
+    margin-top: 5rem !important;
+  }
+}
+
             </style>
                   <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CRoboto:400,500%7CExo+2:600&display=swap"
         rel="stylesheet">
@@ -458,8 +464,8 @@
        
            
 
-            <div class="quiz_box " >
-                <header class="hero__lead "  style="background: #16459e !important; width: 100%; height: 100px;; margin: 0; padding: 0; box-sizing: border-box;">
+            <div class="quiz_box  ques-mobile"  >
+                <header class="hero__lead "  style="background: #16459e !important; width: 100%; height: 100%; margin: 0; padding: 0; box-sizing: border-box;">
                     <footer>
                         <div class="total_que text-white" style="font-weight: 700">
                             <!-- Here I've inserted Question Count Number from JavaScript -->
@@ -477,9 +483,9 @@
             
     
                    
-                    <header class="hero__lead text-white-50"  style="background: #16459e !important; width: 100%; height: 100px;; margin: 0; padding: 0; box-sizing: border-box;">
+                    <header class="hero__lead text-white-50"  style="background: #16459e !important; width: 100%; height: 100%; margin: 0; padding: 0; box-sizing: border-box;">
 
-                    <div class="que_text" style="padding: 30px !important">
+                    <div class="que_text" style="padding: 30px !important; font-weight: 700">
                         <!-- Here I've inserted question from JavaScript -->
     
                     </div>
