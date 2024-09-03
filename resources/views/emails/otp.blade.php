@@ -6,4 +6,4 @@
 <p>Please verify your account using the above otp.</p>
 
 <p>Regards,<br>
-Akoolid Africa</p>
+Skoolid Africa</p>
