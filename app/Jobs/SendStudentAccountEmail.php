@@ -19,15 +19,17 @@ class SendStudentAccountEmail implements ShouldQueue
     public $user;
     public $guardian_email;
     public $password;
+    public $email;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(User $user, string $guardian_email, string $password)
+    public function __construct(User $user, string $guardian_email, string $password, string $email)
     {
         $this->user = $user;
         $this->guardian_email = $guardian_email;
         $this->password = $password;
+        $this->email = $email;
     }
 
     /**
@@ -37,7 +39,7 @@ class SendStudentAccountEmail implements ShouldQueue
     public function handle()
     {
         // Send the email
-        Mail::to($this->guardian_email)->send(new StudentAccountCreated($this->user, $this->password));
+        Mail::to($this->guardian_email)->send(new StudentAccountCreated($this->user, $this->password, $this->email));
     }
 
 }

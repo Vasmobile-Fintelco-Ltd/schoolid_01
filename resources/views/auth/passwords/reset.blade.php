@@ -45,7 +45,7 @@
                         <input id="password-confirm" placeholder="Enter 4 Digits Pin" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
 
                     </div>
-                    <button type="submit" class="btn btn-primary">Reset Password</button>
+                    <button type="submit" class="btn btn-primary">Reset Pin</button>
                     
                   </form>
             </div>

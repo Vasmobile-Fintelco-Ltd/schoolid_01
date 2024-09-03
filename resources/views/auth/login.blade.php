@@ -41,7 +41,7 @@
                     <button type="submit" class="btn btn-primary">Sign In</button>
                     <p>Dont have an account? <a href="{{ route('register') }}">Sign Up</a></p>
                     @if (Route::has('password.request'))
-                                    <a href="{{ route('password.request') }}" class="text-muted float-end"><small>Forgot your password?</small></a>
+                                    <a href="{{ route('password.request') }}" class="text-muted float-end"><small>Forgot your pin?</small></a>
                      @endif
                   </form>
             </div>
