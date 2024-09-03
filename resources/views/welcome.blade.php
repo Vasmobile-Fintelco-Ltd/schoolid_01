@@ -86,7 +86,7 @@
                                     value="">
                                 <a class="rstore-domain-search-button search-submit btn btn-info"
                                     href="{{ route('register') }}">Sign Up</a>
-                                    <a class="rstore-domain-search-button search-submit btn btn-primary"
+                                <a class="rstore-domain-search-button search-submit btn btn-primary"
                                     href="{{ route('login') }}">Sign In</a>
                             </div>
                         </div>
