@@ -16,14 +16,16 @@ class StudentAccountCreated extends Mailable
 
     public $user;
     public $password;
+    public $email;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(User $user, string $password)
+    public function __construct(User $user, string $password, string $email)
     {
         $this->user = $user;
         $this->password = $password;
+        $this->email = $email;
     }
 
     public function build()

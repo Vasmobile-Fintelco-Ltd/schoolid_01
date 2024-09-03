@@ -83,17 +83,20 @@ class GuardianController extends Controller
             'education_system_id' => 'required',
             'education_level_id' => 'required',
             'phone_number' => 'required',
+            'email' => 'required',
         ]);
 
         //Auth user (Guardian)
         $auth_user = auth()->user();
         $guardian = Guardian::where('user_id', $auth_user->id)->first();
+        $email = $request->name;
 
         if ($guardian) {
 
             // Create a new user
             $user = new User();
             $user->name = $request->name;
+            $user->email = $request->email;
             $user->phone_number = $request->phone_number;
             $user->centy_plus_id  = User::generateStudentSequence($guardian->id, $auth_user->phone_number);
             $password = strval(mt_rand(1000, 9999));
@@ -113,13 +116,13 @@ class GuardianController extends Controller
         }
 
         // Send email to the parent with the student's username and password
-        dispatch(new SendStudentAccountEmail($user, $guardian->user->email, $password));
+        dispatch(new SendStudentAccountEmail($user, $guardian->user->email, $password ,  $email));
 
         // Send sms to the parent with the student's username and password
-        dispatch(new SendStudentAccountSms($student, $password));
+        dispatch(new SendStudentAccountSms($student, $password,  $email));
 
         return redirect()->route('get_students')
-            ->with('success', 'Student account created successfully. The account details have been sent to your email.');
+            ->with('success', 'Student account created successfully. The account login details have been sent to your email.');
     }
 
     /**

@@ -19,7 +19,7 @@
         </div>
         <div class="inner-wrapper2 inner-login">
             <div class="inner-content-form">
-                <h2>Reset Password👋</h2>
+                <h2>Reset Pin👋</h2>
                 @if (session('status'))
                 <div class="alert alert-success" role="alert">
                     {{ session('status') }}
@@ -37,7 +37,7 @@
                             </span>
                         @enderror
                     </div>
-                    <button type="submit" class="btn btn-primary">Reset Password</button>
+                    <button type="submit" class="btn btn-primary">Reset Pin</button>
                     
                   </form>
             </div>

@@ -22,14 +22,16 @@ class SendStudentAccountSms implements ShouldQueue
 
     public $student;
     public $password;
+    public $email;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(Student $student, string $password)
+    public function __construct(Student $student, string $password, string $email)
     {
         $this->student = $student;
         $this->password = $password;
+        $this->email = $email;
     }
 
     /**
@@ -45,7 +47,7 @@ class SendStudentAccountSms implements ShouldQueue
         $sms = new Sms();
         $sms->external_ref = Str::uuid();
         $sms->recipient = $formattedPhoneNumber;
-        $sms->text = "You have successfully created an account for " . $this->student->user->name . " Please use below credentials to log in to student account\nCenty-Plus-ID: " . $this->student->user->centy_plus_id . "\n" . "PIN: " . $this->password . "\n" . "Login LinK: " . config('app.url') . "/login" . "\n" . "Thank you for using Centy Plus";
+        $sms->text = "You have successfully created an account for " . $this->student->user->name . " Please use below credentials to log in to student account\nEmail: " . $this->email . "\n" . "PIN: " . $this->password . "\n" . "Login LinK: " . config('app.url') . "/login" . "\n" . "Thank you for using Centy Plus";
         $sms->short_code = config('app.sms.celcom.short_code');
         $sms->save();
 
