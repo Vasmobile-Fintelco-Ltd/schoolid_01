@@ -19,7 +19,7 @@
         </div>
         <div class="inner-wrapper2 inner-login">
             <div class="inner-content-form">
-                <h2>Reset Pin👋</h2>
+                <h2>Enter your email 👋</h2>
                 @if (session('status'))
                 <div class="alert alert-success" role="alert">
                     {{ session('status') }}

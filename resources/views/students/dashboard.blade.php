@@ -76,7 +76,7 @@ data-responsive-width="992px">
    <div class="container page__container page-section "  style="padding-top:0px; margin-top:-5px; ">
        
     <div class="page-separator">
-        <div class="page-separator__text mt-2 mb-3"> BRAIN GAME RESULTS</div>
+        <div class="page-separator__text mt-2 mb-3"> RESULTS</div>
     </div>
    </div>
 
@@ -88,40 +88,87 @@ data-responsive-width="992px">
 
        <div class="card mb-lg-32pt shadow-lg">
 
-           <div class="table-responsive"
-                data-toggle="lists"
-                data-lists-sort-by="js-lists-values-date"
-                data-lists-sort-desc="true"
-                data-lists-values='["js-lists-values-name", "js-lists-values-company", "js-lists-values-phone", "js-lists-values-date"]'>
-                <table  class="table table-striped dt-responsive nowrap w-100" style="padding: 30px">
-                    <thead style="height:40px;background:#e9edf2;">
-                        <tr>
-                            <th>No</th> 
-                            <th>Date</th>
-                            <th>Time</th>    
-                            <th>Centiis  </th>
-                            <th >Score  </th>
-                           
-                        </tr>
-                    </thead>
-
-
-                    <tbody>
-                        @foreach ($brainGameresults as $brainGameresult) 
-                        <tr>                                       
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $brainGameresult->created_at->format('Y:m:d') }}</td>
-                            <td>{{ $brainGameresult->created_at->format('h:i A') }}</td>
-                            <td>{{ $brainGameresult->yes_ans }}</td>
-                            <td> {{ number_format(($brainGameresult->yes_ans  ) / ( ($brainGameresult->yes_ans) + $brainGameresult->no_ans)  * 100 , 2)}} %</td>
-                          
-                        </tr>
-                        @endforeach
-
-                    </tbody>
-                </table>
+      
+            <ul class="nav nav-tabs" id="resultTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="brain-game-tab" data-toggle="tab" href="#brain-game" role="tab" aria-controls="brain-game" aria-selected="true">Brain Game</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="quiz-tab" data-toggle="tab" href="#quiz" role="tab" aria-controls="quiz" aria-selected="false">Quiz</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="examind-tab" data-toggle="tab" href="#examind" role="tab" aria-controls="examind" aria-selected="false">Examind</a>
+                </li>
+            </ul>
+        
+            <div class="tab-content" id="resultTabContent">
+                <!-- Brain Game Tab -->
+                <div class="tab-pane fade show active" id="brain-game" role="tabpanel" aria-labelledby="brain-game-tab">
+                    <div class="table-responsive" data-toggle="lists" data-lists-sort-by="js-lists-values-date" data-lists-sort-desc="true" data-lists-values='["js-lists-values-name", "js-lists-values-company", "js-lists-values-phone", "js-lists-values-date"]'>
+                        <table class="table table-striped dt-responsive nowrap w-100" style="padding: 30px">
+                            <thead style="height:40px;background:#e9edf2;">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Centiis</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($brainGameresults as $brainGameresult)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $brainGameresult->created_at->format('Y:m:d') }}</td>
+                                    <td>{{ $brainGameresult->created_at->format('h:i A') }}</td>
+                                    <td>{{ $brainGameresult->yes_ans }}</td>
+                                    <td>{{ number_format(($brainGameresult->yes_ans) / (($brainGameresult->yes_ans) + $brainGameresult->no_ans) * 100, 2) }} %</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+        
+                <!-- Quiz Tab -->
+                <div class="tab-pane fade" id="quiz" role="tabpanel" aria-labelledby="quiz-tab">
+                    <div class="table-responsive" data-toggle="lists" data-lists-sort-by="js-lists-values-date" data-lists-sort-desc="true" data-lists-values='["js-lists-values-name", "js-lists-values-company", "js-lists-values-phone", "js-lists-values-date"]'>
+                     
+                        <!-- Add your quiz table or content here -->
+                        <table class="table table-striped dt-responsive nowrap w-100" style="padding: 30px">
+                            <thead style="height:40px;background:#e9edf2;">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Centiis</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            
+                        </table>
+                    </div>
+                </div>
+        
+                <!-- Examind Tab -->
+                <div class="tab-pane fade" id="examind" role="tabpanel" aria-labelledby="examind-tab">
+                    <div class="table-responsive" data-toggle="lists" data-lists-sort-by="js-lists-values-date" data-lists-sort-desc="true" data-lists-values='["js-lists-values-name", "js-lists-values-company", "js-lists-values-phone", "js-lists-values-date"]'>
+                        <table class="table table-striped dt-responsive nowrap w-100" style="padding: 30px">
+                            <thead style="height:40px;background:#e9edf2;">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Centiis</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            
+                        </table></div>
+                </div>
             </div>
         </div>
+        
 
         <div style="margin-top:13rem">
             <p class="text-70 brand mb-24pt">

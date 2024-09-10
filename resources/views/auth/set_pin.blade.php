@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100..800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('ui/assets/css/font-awesome-pro.css')}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
    
 
     <section class="signup-wrapper">
@@ -20,7 +21,7 @@
             </div>
             <div class="inner-wrapper2 inner-login">
                 <div class="inner-content-form">
-                    <h2>Submit Pin👋</h2>
+                    <h2>Set 4 digit pin👋</h2>
                     @if(session('message'))
                     <div class="alert alert-danger">
                         {{ session('message') }}
@@ -29,7 +30,7 @@
                              
                     <form method="POST" action="{{ route('submit-pin') }}" style="box-shadow: none; padding:20px 10px;">
                         @csrf
-                        <div class="form-group">
+                        <div class="form-group position-relative">
                             <input 
                                 id="password" 
                                 name="pin" 
@@ -42,9 +43,16 @@
                                 class="form-control @error('pin') is-invalid @enderror" 
                                 required 
                                 autocomplete="new-password">
+                            <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password" style="position: absolute; top: 50%; right: 15px; cursor: pointer; transform: translateY(-50%);"></span>
+                        
+                            @error('pin')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                         
-                        <div class="form-group">
+                        <div class="form-group position-relative">
                             <input 
                                 id="password-confirm" 
                                 name="pin_confirmation" 
@@ -57,7 +65,10 @@
                                 class="form-control" 
                                 required 
                                 autocomplete="new-password">
+                            <span toggle="#password-confirm" class="fa fa-fw fa-eye field-icon toggle-password" style="position: absolute; top: 50%; right: 15px; cursor: pointer; transform: translateY(-50%);"></span>
                         </div>
+                        
+                        
                         <button class="btn btn-primary" type="submit">Submit</button>
                       </form>
                 </div>
@@ -78,6 +89,27 @@
         });
         </script>
     <!-- Optional JavaScript; choose one of the two! -->
+    <!-- Include Font Awesome for the eye icons -->
+
+                        
+    <script>
+        document.querySelectorAll('.toggle-password').forEach(function (icon) {
+            icon.addEventListener('click', function () {
+                const input = document.querySelector(icon.getAttribute('toggle'));
+                // Toggle the type attribute
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        });
+    </script>
+    
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>

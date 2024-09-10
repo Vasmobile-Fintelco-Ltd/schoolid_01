@@ -69,7 +69,7 @@
             <div class="content-page">
                 <div class="content">
                     <!-- Topbar Start -->
-                    @include('teachers.inc.navbar')
+                    @include('students.inc.navbar')
                     <!-- end Topbar -->
 
                     <!-- Start Content-->

@@ -54,6 +54,15 @@ class StudentController extends Controller
         return view('students.dashboard', compact('centy_balance', 'account_balance', 'centiisObtained', 'questions_count', 'exams_count', 'exams', 'results','brainGameresults'));
 
     }
+    
+
+    public function account()
+    {
+        $users = Auth::user();
+        $user = User::where('id',$users->id)->get();
+       
+        return view('students.account', compact('user'));
+    }
 
     public function getSubjects()
     {

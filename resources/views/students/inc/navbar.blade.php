@@ -98,7 +98,7 @@
                 <span>
                     <span class="account-user-name" style="font-size:11px"> {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                     </span>
-                    {{-- <span class="account-position"> {{ Auth::user()->role }}</span> --}}
+                    <span class="account-position"> {{ Auth::user()->role }}</span>
                 </span>
             </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated topbar-dropdown-menu profile-dropdown" style="margin-top: -1.5rem">
@@ -108,7 +108,7 @@
                 </div>
 
                 <!-- item-->
-                <a href="{{ route('accounts')}}" class="dropdown-item notify-item">
+                <a href="{{ route('account')}}" class="dropdown-item notify-item">
                     <i class="mdi mdi-account-circle me-1"></i>
                     <span>My Account</span>
                 </a>

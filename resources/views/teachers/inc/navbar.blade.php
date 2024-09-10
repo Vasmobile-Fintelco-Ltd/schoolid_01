@@ -19,7 +19,7 @@
                     </h5>
                 </div>
 
-                <div style="max-height: 230px;" data-simplebar="">
+                {{-- <div style="max-height: 230px;" data-simplebar="">
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item notify-item">
                         <div class="notify-icon bg-primary">
@@ -80,7 +80,7 @@
                             <small class="text-muted">13 days ago</small>
                         </p>
                     </a>
-                </div>
+                </div> --}}
 
                 <!-- All-->
                 <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
@@ -96,7 +96,8 @@
                     <img src="{{ asset('assets/images/users/avatar-1.jpg') }}" alt="user-image" class="rounded-circle">
                 </span>
                 <span>
-                    <span class="account-user-name" style="font-size:11px"> {{ Auth::user()->name }}</span>
+                    <span class="account-user-name" style="font-size:11px"> {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                    </span>
                     <span class="account-position"> {{ Auth::user()->role }}</span>
                 </span>
             </a>
@@ -113,19 +114,19 @@
                 </a>
 
                 <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                {{-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                     <i class="mdi mdi-account-edit me-1"></i>
                     <span>Settings</span>
-                </a>
+                </a> --}}
 
                 <!-- item-->
                
 
                 <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                {{-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                     <i class="mdi mdi-lock-outline me-1"></i>
                     <span>Lock Screen</span>
-                </a>
+                </a> --}}
                 
 
                 <!-- item-->

@@ -36,15 +36,30 @@
 
                     </div>
                     <div class="form-group">
-                        <input id="password" placeholder="Enter 4 Digits Pin" type="password" class="form-control" name="password" required autocomplete="new-password">
-
-                           
+                        <input id="password" 
+                               placeholder="Enter 4 Digits Pin" 
+                               type="password" 
+                               class="form-control" 
+                               name="password" 
+                               required 
+                               autocomplete="new-password" 
+                               maxlength="4" 
+                               pattern="\d{4}" >
                     </div>
-
+                    
                     <div class="form-group">
-                        <input id="password-confirm" placeholder="Enter 4 Digits Pin" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-
+                        <input id="password-confirm" 
+                               placeholder="Enter 4 Digits Pin" 
+                               type="password" 
+                               class="form-control" 
+                               name="password_confirmation" 
+                               required 
+                               autocomplete="new-password" 
+                               maxlength="4" 
+                               pattern="\d{4}" 
+                               >
                     </div>
+                    
                     <button type="submit" class="btn btn-primary">Reset Pin</button>
                     
                   </form>

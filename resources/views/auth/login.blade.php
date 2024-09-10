@@ -33,15 +33,51 @@
                         @enderror
 
                     </div>
-                    <div class="form-group">
-                        {{-- <input type="pin" class="form-control" id="exampleInputPin" aria-describedby="emailPin" placeholder="Enter Pin"> --}}
-                        <input id="password" type="password" pattern="\d*" inputmode="numeric" minlength="4" maxlength="4" placeholder="Enter 4-digit PIN" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
+                    <div class="form-group position-relative">
+                        <input id="password" 
+                               type="password" 
+                               pattern="\d*" 
+                               inputmode="numeric" 
+                               minlength="4" 
+                               maxlength="4" 
+                               placeholder="Enter 4-digit PIN" 
+                               class="form-control @error('password') is-invalid @enderror" 
+                               name="password" 
+                               required 
+                               autocomplete="current-password">
+                        <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password" style="position: absolute; top: 50%; right: 15px; cursor: pointer; transform: translateY(-50%);"></span>
+                    
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
+                    
+                    <!-- Include Font Awesome for the eye icon -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+                    
+                    <script>
+                        document.querySelector('.toggle-password').addEventListener('click', function (e) {
+                            const passwordInput = document.getElementById('password');
+                            const icon = e.target;
+                            // Toggle the type attribute
+                            if (passwordInput.type === 'password') {
+                                passwordInput.type = 'text';
+                                icon.classList.remove('fa-eye');
+                                icon.classList.add('fa-eye-slash');
+                            } else {
+                                passwordInput.type = 'password';
+                                icon.classList.remove('fa-eye-slash');
+                                icon.classList.add('fa-eye');
+                            }
+                        });
+                    </script>
+                    
                     <button type="submit" class="btn btn-primary">Sign In</button>
                     <p>Dont have an account? <a href="{{ route('register') }}">Sign Up</a></p>
                     @if (Route::has('password.request'))
-                                    <a href="{{ route('password.request') }}" class="text-muted float-end"><small>Forgot your pin?</small></a>
+                                    <a href="{{ route('password.request') }}" class="text-muted float-end"><small class="text-primary">Forgot your pin?</small></a>
                      @endif
                   </form>
             </div>

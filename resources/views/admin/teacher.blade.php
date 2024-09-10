@@ -136,6 +136,7 @@
                                         <th>Email</th>
                                         <th>Phone Number</th>
                                         <th>Role</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 @foreach ($teachers as $teacher)
@@ -144,6 +145,17 @@
                                     <td>{{ $teacher->email }}</td>
                                     <td>{{ $teacher->phone_number }}</td>
                                     <td>{{ $teacher->role }}</td>
+                                    <td>
+                                       
+                                        <a href="#"  title="Delete" onclick="event.preventDefault(); deleteStudent('{{ route('delete_teacher', $teacher->id) }}');">
+                                            <i class="mdi mdi-trash-can-outline"></i>
+                                        </a>
+
+                                        <form id="delete-form" method="POST" action="{{ route('delete_teacher', $teacher->id) }}" style="display: none;">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
+                                    </td>
                                 </tr>
                                 @endforeach
 
@@ -167,6 +179,41 @@
 
 
 @section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- third party js -->
+    <script src="{{ asset('assets/js/vendor/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vendor/dataTables.bootstrap5.js') }}"></script>
+    <script src="{{ asset('assets/js/vendor/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vendor/responsive.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vendor/buttons.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vendor/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vendor/buttons.flash.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vendor/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vendor/dataTables.keyTable.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vendor/dataTables.select.min.js') }}"></script>
+
+    <script>
+
+        function deleteStudent(deleteUrl) {
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "This action cannot be undone!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Perform the deletion by submitting the form
+                            document.getElementById('delete-form').action = deleteUrl;
+                            document.getElementById('delete-form').submit();
+                        }
+                    });
+                }
+            </script>
+
     @if(Session::has('formData'))
         <script>
             // Restore form data from session
@@ -176,4 +223,5 @@
             });
         </script>
     @endif
+    
 @endsection
