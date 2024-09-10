@@ -3,10 +3,10 @@
 
     <a href="" class="logo text-center logo-light" style="background: #16459e !important">
        <span class="logo-lg">
-           <img src="{{ asset('back/public/images/illustration/student/128/skoolid-logo.png') }}" alt="" height="40" style="float: left; margin-top:15px;">
+           <img src="{{ asset('back/public/images/illustration/student/128/skoolid-logo.png') }}" alt="" height="30" style="float: left; margin-top:15px;">
        </span>
         <span class="logo-sm">
-           <img src="{{ asset('back/public/images/illustration/student/128/skoolid-logo.png') }}" alt="" height="40">
+           <img src="{{ asset('back/public/images/illustration/student/128/skoolid-logo.png') }}" alt="" height="30">
        </span>
     </a>
 
@@ -19,7 +19,7 @@
 
            <li class="side-nav-item">
                <a href="{{ route('nonstudent.dashboard')}}" class="side-nav-link">
-                   <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">home</span>
+                   <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left" style="font-size:17px !important">home</span>
                    <span> Home </span>
                </a>
            </li>
@@ -28,7 +28,7 @@
 
            <li class="side-nav-item">
                <a href="{{ route('nonstudent_brain_game')}}" class="side-nav-link">
-                   <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">style</span>
+                   <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left" style="font-size:17px !important">style</span>
                    <span> Brain Game </span>
                </a>
            </li>

@@ -124,6 +124,13 @@ class GuardianController extends Controller
         return redirect()->route('get_students')
             ->with('success', 'Student account created successfully. The account login details have been sent to your email.');
     }
+    public function accounts()
+    {
+        $users = Auth::user();
+        $user = User::where('id',$users->id)->get();
+       
+        return view('parents.account', compact('user'));
+    }
 
     /**
      * Display the student details  resource.

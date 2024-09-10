@@ -10,7 +10,7 @@
                 <div class="page-title-box">
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Centy Plus</a></li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Skoolid</a></li>
                             <li class="breadcrumb-item"><a href="javascript: void(0);">My Students</a></li>
                         </ol>
                     </div>

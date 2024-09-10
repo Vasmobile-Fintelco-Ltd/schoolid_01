@@ -1,14 +1,14 @@
 <div class="leftside-menu">
 
     <!-- LOGO -->
-    <a href="" class="logo text-center logo-light">
+    <a href="" class="logo text-center logo-light" >
         <span class="logo-lg">
-            <img src="{{ asset('assets/images/centyplus logo.png') }}" alt="" height="60">
+            <img src="{{ asset('back/public/images/illustration/student/128/skoolid-logo.png') }}" alt="" height="30" style="float: left; margin-top:15px;">
         </span>
-        <span class="logo-sm">
-            <img src="{{ asset('assets/images/centyplus logo.png') }}" alt="" height="60">
+         <span class="logo-sm">
+            <img src="{{ asset('back/public/images/illustration/student/128/skoolid-logo.png') }}" alt="" height="30">
         </span>
-    </a>
+     </a>
 
     <!-- LOGO -->
     <a href="" class="logo text-center logo-dark">

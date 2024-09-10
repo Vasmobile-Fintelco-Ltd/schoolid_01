@@ -92,6 +92,7 @@ Route::prefix('/admin')->middleware(['isAdmin'])->group(function(){
     Route::post('/education_level', [EduacationSystemsController::class, 'store_education_level'])->name('store_education_level');
 
     Route::get('/sms', [AdminController::class, 'get_sms'])->name('get_sms');
+    Route::delete('/delete_teacher/{id}', [AdminController::class, 'teacherDestroy'])->name('delete_teacher');
 
     // Subscriptions Plan Routes
     Route::resource('subscriptions', SubscriptionPlanController::class);
@@ -117,6 +118,7 @@ Route::prefix('parent')->middleware(['isParent'])->group(function(){
     Route::post('/brain_game_non', [GuardianController::class, 'submitNonBrainGame'])->name('parentbrain_game.submit');
     Route::post('/evaluate-answer', [ChatsGPTController::class, 'evaluateAnswer']);
     Route::get('/brain_game_play', [GuardianController::class, 'noBrainGame'])->name('parentstudent_brain_game');
+    Route::get('/accounts', [GuardianController::class, 'accounts'])->name('accounts');
 
 });
 
@@ -173,6 +175,7 @@ Route::prefix('student')->middleware(['auth', 'isStudent'])->group(function(){
     Route::post('/brain_game', [StudentController::class, 'submitBrainGame'])->name('brain_game.submit');
     Route::post('/evaluate-answer', [ChatsGPTController::class, 'evaluateAnswer']);
     Route::post('/stk-push/brain-game', [StudentController::class, 'activateBrainGame'])->name('stk_push.brain_game');
+    Route::get('/account', [StudentController::class, 'account'])->name('account');
 });
 
 Route::prefix('nonstudent')->middleware(['auth', 'isNonstudent'])->group(function(){

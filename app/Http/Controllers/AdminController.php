@@ -188,5 +188,21 @@ class AdminController extends Controller
     {
         //
     }
-
+    public function teacherDestroy(string $id)
+    {
+        // Fetch the teacher record by ID
+        $teacher = Teacher::find($id);
+    
+        // Check if the teacher record exists
+        if (!$teacher) {
+            return redirect()->route('admin.dashboard')->with('error', 'Teacher not found!');
+        }
+    
+        // Delete the teacher record
+        $teacher->delete();
+    
+        // Redirect back to the teacher list with a success message
+        return redirect()->route('admin.dashboard')->with('success', 'Teacher deleted successfully!');
+    }
+    
 }
